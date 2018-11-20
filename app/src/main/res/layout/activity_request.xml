@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/sixTeen"
+    tools:context=".RequestActivity">
+
+
+    <TextView
+        android:id="@+id/explain_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/explaination"
+        android:layout_marginTop="70dp"
+        android:textColor="@android:color/black"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <EditText
+        android:padding="8dp"
+        android:id="@+id/explain_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/explain_textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_style"
+        android:ems="10"
+        android:gravity="top|left"
+        android:inputType="textMultiLine"
+        android:minLines="6"
+        android:maxLines="9"/>
+
+    <Button
+        android:id="@+id/requestButtonUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/explain_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/sixTeen"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_style"
+        android:text="Button" />
+
+</RelativeLayout>

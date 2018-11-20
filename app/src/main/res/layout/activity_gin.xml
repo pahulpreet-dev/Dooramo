@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".LoginActivity">
+
+
+    <EditText
+
+        android:id="@+id/unameeditText"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/textView2"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/edittext_style"
+        android:inputType="textPersonName"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/unameeditText"
+        android:layout_marginTop="100dp"
+        android:text="Username"
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:id="@+id/passwordeditText2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/textView3"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/edittext_style"
+        android:inputType="textPassword"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/unameeditText"
+        android:layout_below="@+id/unameeditText"
+        android:layout_marginTop="16dp"
+        android:text="Password"
+        android:textColor="@android:color/black" />
+
+    <Button
+        android:id="@+id/lgnBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordeditText2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_style"
+        android:text="Login"
+        android:textColor="@android:color/white" />
+</RelativeLayout>
