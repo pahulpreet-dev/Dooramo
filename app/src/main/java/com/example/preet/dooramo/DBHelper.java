@@ -55,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public long createUserDetails(String name,String dob, String email, String aptNo, String number)
+    public long createUserDetails(String name,String dob, String email, String aptNo, String contact)
     {
 
         ContentValues cv=new ContentValues();
@@ -63,7 +63,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("dob", dob);
         cv.put("email",email);
         cv.put("aptNo", aptNo);
-        cv.put("number", number);
+        cv.put("contact", contact);
         return dbcall.insert("userInfo",null,cv);
     }
 

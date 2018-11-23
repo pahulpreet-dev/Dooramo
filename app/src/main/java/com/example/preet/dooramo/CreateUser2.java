@@ -51,10 +51,10 @@ public class CreateUser2 extends AppCompatActivity {
                 close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(close);
             } else
-                Toast.makeText(this, "Error. Please contact developer.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error. Please contact developer. 1", Toast.LENGTH_SHORT).show();
         }
         else
-            Toast.makeText(this, "Error. Please contact developer.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error. Please contact developer. 2", Toast.LENGTH_SHORT).show();
     }
 
     private boolean checkUserExistance() {

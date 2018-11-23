@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(LoginActivity.this, ManagementHome.class);
             finish();
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
         loginBtn.setOnClickListener(new View.OnClickListener() {
