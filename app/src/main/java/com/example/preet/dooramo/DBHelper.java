@@ -28,9 +28,13 @@ public class DBHelper extends SQLiteOpenHelper {
         String createUsernameQ = "create table if not exists 'userAccount'('srno' integer primary key AUTOINCREMENT" +
                 ", 'username' varchar(100), 'password' varchar(100))";
 
+        String createManagerQuery = "create table if not exists 'managerAccount'('srno' integer primary key AUTOINCREMENT" +
+                ", 'username' varchar(100), 'password' varchar(100))";
+
         try {
             db.execSQL(createUserDetailsQ);
             db.execSQL(createUsernameQ);
+            db.execSQL(createManagerQuery);
         } catch (Exception e) {
             Toast.makeText(con,"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
         }
@@ -54,7 +58,9 @@ public class DBHelper extends SQLiteOpenHelper {
             Toast.makeText(con,"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
-
+    String createUserDetailsQ = "create table if not exists 'userInfo'('srno' integer primary key AUTOINCREMENT" +
+            ", 'name' varchar(100), 'dob' varchar(100), 'email' varchar(100), 'aptNo' varchar(100)," +
+            " 'contact' varchar(100))";
     public long createUserDetails(String name,String dob, String email, String aptNo, String contact)
     {
 
@@ -67,6 +73,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return dbcall.insert("userInfo",null,cv);
     }
 
+    String createUsernameQ = "create table if not exists 'userAccount'('srno' integer primary key AUTOINCREMENT" +
+            ", 'username' varchar(100), 'password' varchar(100))";
     public long createUsername(String username,String password)
     {
 
@@ -75,5 +83,14 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("password",password);
 
         return dbcall.insert("userAccount",null,cv);
+    }
+    public long createManager(String username,String password)
+    {
+
+        ContentValues cv=new ContentValues();
+        cv.put("username",username);
+        cv.put("password",password);
+
+        return dbcall.insert("managerAccount",null,cv);
     }
 }
