@@ -13,12 +13,16 @@ public class ManagementHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_management_home);
-        newUser = findViewById(R.id.newUserbutton);
+        initComponents();
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ManagementHome.this, CreateUser.class));
             }
         });
+    }
+
+    private void initComponents() {
+        newUser = findViewById(R.id.userbuttonMH);
     }
 }
