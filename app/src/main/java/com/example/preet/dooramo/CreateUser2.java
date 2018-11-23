@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +44,7 @@ public class CreateUser2 extends AppCompatActivity {
         status = dbHelper.createUserDetails(name, dob, email, aptNo, number);
         if(status > 1) {
             long status1 = -1;
+            dbHelper.caller();
             status1 = dbHelper.createUsername(username.getText().toString(), password.getText().toString());
             if(status1 > 1) {
                 Toast.makeText(this, "New user account has been created successfully",
@@ -50,8 +52,9 @@ public class CreateUser2 extends AppCompatActivity {
                 Intent close = new Intent(CreateUser2.this, ManagementHome.class);
                 close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(close);
-            } else
+            } else {
                 Toast.makeText(this, "Error. Please contact developer. 1", Toast.LENGTH_SHORT).show();
+            }
         }
         else
             Toast.makeText(this, "Error. Please contact developer. 2", Toast.LENGTH_SHORT).show();
@@ -96,5 +99,6 @@ public class CreateUser2 extends AppCompatActivity {
         email = intent.getStringExtra("email");
         aptNo = intent.getStringExtra("aptNo");
         number = intent.getStringExtra("number");
+        Log.d("name",name);
     }
 }

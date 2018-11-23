@@ -52,8 +52,12 @@ public class LoginActivity extends AppCompatActivity {
         if(next.moveToNext()) {
             return true;
         } else {
-            username.setError("Invalid Username/Password");
-            return false;
+            String queryM = "select * from managerAccount where username = '" + username.getText().toString()
+                    + "' AND password = '" + password.getText().toString() + "'";
+
+            Cursor nextM = dbcall.rawQuery(query, null);
+            return nextM.moveToNext();
+            //return false;
         }
     }
 
