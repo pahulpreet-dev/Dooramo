@@ -42,11 +42,11 @@ public class CreateUser2 extends AppCompatActivity {
         long status = -1;
 
         status = dbHelper.createUserDetails(name, dob, email, aptNo, number);
-        if(status > 1) {
+        if(status > 0) {
             long status1 = -1;
             dbHelper.caller();
             status1 = dbHelper.createUsername(username.getText().toString(), password.getText().toString());
-            if(status1 > 1) {
+            if(status1 > 0) {
                 Toast.makeText(this, "New user account has been created successfully",
                         Toast.LENGTH_SHORT).show();
                 Intent close = new Intent(CreateUser2.this, ManagementHome.class);
