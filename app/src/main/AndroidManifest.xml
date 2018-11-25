@@ -22,7 +22,8 @@
         <activity android:name=".CreateUser2" />
         <activity android:name=".ManagementHome" />
         <activity android:name=".CreateManager" />
-        <activity android:name=".CheckRequests"></activity>
+        <activity android:name=".CheckRequests" />
+        <activity android:name=".RequestDetails"></activity>
     </application>
 
 </manifest>

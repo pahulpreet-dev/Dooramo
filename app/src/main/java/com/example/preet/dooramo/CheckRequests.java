@@ -1,6 +1,7 @@
 package com.example.preet.dooramo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 
 public class CheckRequests extends AppCompatActivity {
 
-    private ArrayList<String> requests, usernames, aptNos, contacts, emails, services, dateTime, statuses, names;
+    private ArrayList<String> requests, ids, aptNos, contacts, emails, services, dateTime, statuses, names;
 
     ListView requestList;
     TextView norequest;
@@ -32,6 +34,21 @@ public class CheckRequests extends AppCompatActivity {
         getData();
 
         requestList.setAdapter(new Adapter(CheckRequests.this));
+        requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(CheckRequests.this, RequestDetails.class)
+                        .putExtra("request", requests.get(position))
+                        .putExtra("aptNo", aptNos.get(position))
+                        .putExtra("contact", contacts.get(position))
+                        .putExtra("email", emails.get(position))
+                        .putExtra("service", services.get(position))
+                        .putExtra("dateTime", dateTime.get(position))
+                        .putExtra("status", statuses.get(position))
+                        .putExtra("name", names.get(position))
+                        .putExtra("id", ids.get(position)));
+            }
+        });
     }
 
     private void getData() {
@@ -45,7 +62,7 @@ public class CheckRequests extends AppCompatActivity {
             do {
                 requests.add(next.getString(next.getColumnIndex("request")));
                 dateTime.add(next.getString(next.getColumnIndex("dateTime")));
-                usernames.add(next.getString(next.getColumnIndex("username")));
+                ids.add(next.getString(next.getColumnIndex("srno")));
                 statuses.add(next.getString(next.getColumnIndex("status")));
                 names.add(next.getString(next.getColumnIndex("name")));
                 emails.add(next.getString(next.getColumnIndex("email")));
@@ -103,11 +120,6 @@ public class CheckRequests extends AppCompatActivity {
             status.setText(status.getText().toString() + statuses.get(position));
             TextView date = v.findViewById(R.id.datetextView16rli);
             date.setText(dateTime.get(position));
-//            ImageView imageView = v.findViewById(R.id.serviceIV);
-//            TextView textView = v.findViewById(R.id.serviceTV);
-//
-//            imageView.setImageResource(images[position]);
-//            textView.setText(imageNames[position]);
 
             return v;
         }
@@ -115,7 +127,7 @@ public class CheckRequests extends AppCompatActivity {
 
     private void initialize() {
         requestList = findViewById(R.id.requestList);
-        usernames = new ArrayList<>();
+        ids = new ArrayList<>();
         requests = new ArrayList<>();
         aptNos = new ArrayList<>();
         contacts = new ArrayList<>();

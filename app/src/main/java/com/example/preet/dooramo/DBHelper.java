@@ -117,4 +117,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return dbcall.insert("requests",null,cv);
     }
+    public long updateRequestStatus(String id, String status) {
+        ContentValues cv = new ContentValues();
+        cv.put("status", status);
+        return dbcall.update("requests", cv, "srno = " + id, null);
+    }
 }
