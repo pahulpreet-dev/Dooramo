@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class ManagementHome extends AppCompatActivity {
 
-    Button newUser, createManager;
+    Button newUser, createManager, checkRequest;
     //ManagementHome
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +27,18 @@ public class ManagementHome extends AppCompatActivity {
                 startActivity(new Intent(ManagementHome.this, CreateManager.class));
             }
         });
+        checkRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ManagementHome.this, CheckRequests.class));
+            }
+        });
     }
 
     private void initComponents() {
         newUser = findViewById(R.id.userbuttonMH);
         createManager = findViewById(R.id.managerbuttonMH);
+        checkRequest = findViewById(R.id.requestbuttonMH);
     }
 
     @Override

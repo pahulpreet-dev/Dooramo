@@ -9,12 +9,12 @@
     tools:context=".ManagementHome">
     <!--ManagementHome-->
     <Button
-        android:id="@+id/button"
+        android:id="@+id/requestbuttonMH"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_style"
-        android:textColor="@android:color/white"
-        android:text="Check Requests" />
+        android:text="Check Requests"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/button2"

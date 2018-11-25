@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/titletextView12RLI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="TextView qwrqewf qewfwqef..."
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/sercvicetextView13RLi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/titletextView12RLI"
+        android:layout_below="@+id/titletextView12RLI"
+        android:text="Service: " />
+
+    <TextView
+        android:id="@+id/aptnotextView14rli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/titletextView12RLI"
+        android:layout_below="@+id/sercvicetextView13RLi"
+        android:text="Apt. No.: " />
+
+    <TextView
+        android:id="@+id/statustextView15rli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/titletextView12RLI"
+        android:layout_below="@+id/aptnotextView14rli"
+        android:text="Status: " />
+
+    <TextView
+        android:id="@+id/datetextView16rli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/sercvicetextView13RLi"
+        android:text="Date" />
+</RelativeLayout>

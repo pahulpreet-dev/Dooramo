@@ -41,7 +41,7 @@ public class CreateUser2 extends AppCompatActivity {
         dbHelper.caller();
         long status = -1;
 
-        status = dbHelper.createUserDetails(name, dob, email, aptNo, number);
+        status = dbHelper.createUserDetails(name, dob, email, aptNo, number, username.getText().toString());
         if(status > 0) {
             long status1 = -1;
             dbHelper.caller();

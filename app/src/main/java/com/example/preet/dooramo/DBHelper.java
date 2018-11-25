@@ -34,7 +34,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String createRequestQuery = "create table if not exists 'requests'('srno' integer primary key " +
                 "AUTOINCREMENT" +
                 ", 'username' varchar(100), 'request' varchar(500), 'status' varchar(100), 'dateTime' " +
-                "varchar (100), 'service' varchar(100))";
+                "varchar (100), 'service' varchar(100), 'name' varchar(100), 'email' varchar(100)," +
+                " 'contact' varchar(100), 'aptNo' varchar(100))";
 
         try {
             db.execSQL(createUserDetailsQ);
@@ -65,7 +66,8 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public long createUserDetails(String name,String dob, String email, String aptNo, String contact)
+    public long createUserDetails(String name,String dob, String email, String aptNo, String contact,
+                                  String username)
     {
 
         ContentValues cv=new ContentValues();
@@ -74,6 +76,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("email",email);
         cv.put("aptNo", aptNo);
         cv.put("contact", contact);
+        cv.put("username", username);
         return dbcall.insert("userInfo",null,cv);
     }
 
@@ -98,7 +101,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public long createRequest(String username,String request, String status, String dateTime,
-                              String service)
+                              String service, String name, String email, String contact, String aptNo)
     {
 
         ContentValues cv=new ContentValues();
@@ -107,6 +110,10 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("status", status);
         cv.put("dateTime", dateTime);
         cv.put("service", service);
+        cv.put("name", name);
+        cv.put("email", email);
+        cv.put("contact", contact);
+        cv.put("aptNo", aptNo);
 
         return dbcall.insert("requests",null,cv);
     }

@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class RequestActivity extends AppCompatActivity {
-    String serviceRequest;
+    private String serviceRequest, name, aptNo, email, contact, username;
     Button requestButton;
     EditText explainET;
     @Override
@@ -44,18 +44,16 @@ public class RequestActivity extends AppCompatActivity {
         dbHelper.caller();
         long status = -1;
 
-        //getting username
-        SharedPreferences sharedPref = RequestActivity.this.getSharedPreferences("ForLogin",
-                Context.MODE_PRIVATE);
-        String username = sharedPref.getString("name", "n");
         //getting date and time
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd MMMM, yyyy - hh:mm");
         String formattedDate = df.format(c);
         Log.d("DATEEE", formattedDate);
 
-        status = dbHelper.createRequest(username, explainET.getText().toString(), "pending",
-                formattedDate, serviceRequest);
+        getDetailsFromPreferences();
+
+        status = dbHelper.createRequest(username, explainET.getText().toString(), "Pending",
+                formattedDate, serviceRequest, name, email, contact, aptNo);
         if(status > 0) {
             Toast.makeText(RequestActivity.this, "Request has been sent" +
                             " to the management", Toast.LENGTH_SHORT).show();
@@ -64,6 +62,16 @@ public class RequestActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Error. contact developer", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getDetailsFromPreferences() {
+        SharedPreferences sharedPref = RequestActivity.this.getSharedPreferences("ForLogin",
+                Context.MODE_PRIVATE);
+        name = sharedPref.getString("name", "n");
+        email = sharedPref.getString("email", "n");
+        contact = sharedPref.getString("contact", "n");
+        aptNo = sharedPref.getString("aptNo", "n");
+        username = sharedPref.getString("name", "n");
     }
 
     private boolean validate() {

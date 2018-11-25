@@ -28,22 +28,20 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, ServicesActivity.class);
                 finish();
                 startActivity(intent);
+            }
         } else {
             Intent intent = new Intent(LoginActivity.this, ManagementHome.class);
             finish();
             startActivity(intent);
         }
-        }
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkValidLogin()) {
                     if(intentFlag == 0) {
                         updatePrefrences();
-                        Intent intent = new Intent(LoginActivity.this, ServicesActivity.class);
-                        finish();
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+
                     } else if (intentFlag == 1) {
                         Intent intent = new Intent(LoginActivity.this, ManagementHome.class);
                         finish();
@@ -66,8 +64,28 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("ForLogin",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("name", username.getText().toString());
-        editor.commit();
+        DBHelper dbHelper = new DBHelper(LoginActivity.this);
+        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
+
+        String query = "select * from userInfo where username = '" + username.getText().toString()
+                + "'";
+
+        Cursor next = dbcall.rawQuery(query, null);
+        if(next.moveToNext()) {
+            editor.putString("username", username.getText().toString());
+            String name = next.getString(next.getColumnIndex("name"));
+            Log.d("NAMEEE", name);
+            editor.putString("name", name);
+            editor.putString("email", next.getString(next.getColumnIndex("email")));
+            editor.putString("aptNo", next.getString(next.getColumnIndex("aptNo")));
+            editor.putString("contact", next.getString(next.getColumnIndex("contact")));
+            editor.commit();
+            Intent intent = new Intent(LoginActivity.this, ServicesActivity.class);
+            finish();
+            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
     }
 
     private boolean checkValidLogin() {

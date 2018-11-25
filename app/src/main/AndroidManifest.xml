@@ -21,7 +21,8 @@
         <activity android:name=".CreateUser" />
         <activity android:name=".CreateUser2" />
         <activity android:name=".ManagementHome" />
-        <activity android:name=".CreateManager"></activity>
+        <activity android:name=".CreateManager" />
+        <activity android:name=".CheckRequests"></activity>
     </application>
 
 </manifest>
