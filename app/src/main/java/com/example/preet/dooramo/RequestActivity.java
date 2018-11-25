@@ -54,12 +54,15 @@ public class RequestActivity extends AppCompatActivity {
         String formattedDate = df.format(c);
         Log.d("DATEEE", formattedDate);
 
-        status = dbHelper.createRequest(username, explainET.getText().toString(), "pending", formattedDate);
+        status = dbHelper.createRequest(username, explainET.getText().toString(), "pending",
+                formattedDate, serviceRequest);
         if(status > 0) {
             Toast.makeText(RequestActivity.this, "Request has been sent" +
                             " to the management", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RequestActivity.this, ServicesActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        } else {
+            Toast.makeText(this, "Error. contact developer", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -24,16 +24,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gin);
         initComponents();
         if(checkUserExistence()) {
-
+            if(!checkPreferences()) {
+                Intent intent = new Intent(LoginActivity.this, ServicesActivity.class);
+                finish();
+                startActivity(intent);
         } else {
             Intent intent = new Intent(LoginActivity.this, ManagementHome.class);
             finish();
             startActivity(intent);
         }
-        if(!checkPreferences()) {
-            Intent intent = new Intent(LoginActivity.this, ServicesActivity.class);
-            finish();
-            startActivity(intent);
         }
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

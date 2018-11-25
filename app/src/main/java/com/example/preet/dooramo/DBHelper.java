@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String createRequestQuery = "create table if not exists 'requests'('srno' integer primary key " +
                 "AUTOINCREMENT" +
                 ", 'username' varchar(100), 'request' varchar(500), 'status' varchar(100), 'dateTime' " +
-                "varchar (100))";
+                "varchar (100), 'service' varchar(100))";
 
         try {
             db.execSQL(createUserDetailsQ);
@@ -97,7 +97,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return dbcall.insert("managerAccount",null,cv);
     }
 
-    public long createRequest(String username,String request, String status, String dateTime)
+    public long createRequest(String username,String request, String status, String dateTime,
+                              String service)
     {
 
         ContentValues cv=new ContentValues();
@@ -105,6 +106,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("request",request);
         cv.put("status", status);
         cv.put("dateTime", dateTime);
+        cv.put("service", service);
 
         return dbcall.insert("requests",null,cv);
     }
