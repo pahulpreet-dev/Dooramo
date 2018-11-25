@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String createUserDetailsQ = "create table if not exists 'userInfo'('srno' integer primary key AUTOINCREMENT" +
                 ", 'name' varchar(100), 'dob' varchar(100), 'email' varchar(100), 'aptNo' varchar(100)," +
-                " 'contact' varchar(100))";
+                " 'contact' varchar(100), 'username' varchar(100))";
 
         String createUsernameQ = "create table if not exists 'userAccount'('srno' integer primary key AUTOINCREMENT" +
                 ", 'username' varchar(100), 'password' varchar(100))";
@@ -31,10 +31,16 @@ public class DBHelper extends SQLiteOpenHelper {
         String createManagerQuery = "create table if not exists 'managerAccount'('srno' integer primary key AUTOINCREMENT" +
                 ", 'username' varchar(100), 'password' varchar(100))";
 
+        String createRequestQuery = "create table if not exists 'requests'('srno' integer primary key " +
+                "AUTOINCREMENT" +
+                ", 'username' varchar(100), 'request' varchar(500), 'status' varchar(100), 'dateTime' " +
+                "varchar (100))";
+
         try {
             db.execSQL(createUserDetailsQ);
             db.execSQL(createUsernameQ);
             db.execSQL(createManagerQuery);
+            db.execSQL(createRequestQuery);
         } catch (Exception e) {
             Toast.makeText(con,"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
         }
@@ -58,9 +64,7 @@ public class DBHelper extends SQLiteOpenHelper {
             Toast.makeText(con,"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
-    String createUserDetailsQ = "create table if not exists 'userInfo'('srno' integer primary key AUTOINCREMENT" +
-            ", 'name' varchar(100), 'dob' varchar(100), 'email' varchar(100), 'aptNo' varchar(100)," +
-            " 'contact' varchar(100))";
+
     public long createUserDetails(String name,String dob, String email, String aptNo, String contact)
     {
 
@@ -73,8 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return dbcall.insert("userInfo",null,cv);
     }
 
-    String createUsernameQ = "create table if not exists 'userAccount'('srno' integer primary key AUTOINCREMENT" +
-            ", 'username' varchar(100), 'password' varchar(100))";
+
     public long createUsername(String username,String password)
     {
 
@@ -92,5 +95,17 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put("password",password);
 
         return dbcall.insert("managerAccount",null,cv);
+    }
+
+    public long createRequest(String username,String request, String status, String dateTime)
+    {
+
+        ContentValues cv=new ContentValues();
+        cv.put("username",username);
+        cv.put("request",request);
+        cv.put("status", status);
+        cv.put("dateTime", dateTime);
+
+        return dbcall.insert("requests",null,cv);
     }
 }
