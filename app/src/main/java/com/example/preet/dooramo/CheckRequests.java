@@ -2,11 +2,15 @@ package com.example.preet.dooramo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -138,4 +142,32 @@ public class CheckRequests extends AppCompatActivity {
         names = new ArrayList<>();
         norequest = findViewById(R.id.norequestCR);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.check_pending, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.pendingMenu) {
+            for(int i = 0; i < statuses.size(); i++) {
+                if(!statuses.get(i).equalsIgnoreCase("pending")) {
+                    requests.remove(i);
+                    services.remove(i);
+                    aptNos.remove(i);
+                    statuses.remove(i);
+                    dateTime.remove(i);
+                    ids.remove(i);
+                    contacts.remove(i);
+                    emails.remove(i);
+                    names.remove(i);
+                }
+            }
+            requestList.setAdapter(new Adapter(CheckRequests.this));
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
