@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 intentFlag = 1;
                 return true;
             } else {
+                username.setError("Invalid Username/Password");
                 return false;
             }
             //return false;

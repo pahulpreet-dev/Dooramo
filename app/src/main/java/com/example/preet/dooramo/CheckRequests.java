@@ -34,7 +34,7 @@ public class CheckRequests extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_requests);
         initialize();
-
+        setTitle("View Requests");
         getData();
 
         requestList.setAdapter(new Adapter(CheckRequests.this));

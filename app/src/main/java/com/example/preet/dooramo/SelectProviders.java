@@ -20,6 +20,7 @@ public class SelectProviders extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_providers);
+        setTitle("Service Providers");
         initComponents();
         nameNumberList.setVisibility(View.GONE);
         final String[] carpenterNames = {"Bob", "Dolph", "John", "Jinder", "Roman"};

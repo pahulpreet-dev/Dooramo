@@ -18,6 +18,7 @@ public class RequestDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_details);
+        setTitle("View request details");
         initComponents();
         Intent get = getIntent();
         reqTv.setText(get.getStringExtra("request"));

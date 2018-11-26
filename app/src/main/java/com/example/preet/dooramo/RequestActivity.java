@@ -24,6 +24,7 @@ public class RequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
+        setTitle("Request");
         serviceRequest = getIntent().getStringExtra("serviceName");
         initComponents();
         requestButton.setText("Request " + serviceRequest);

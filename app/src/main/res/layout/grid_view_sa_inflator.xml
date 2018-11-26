@@ -6,6 +6,7 @@
     android:background="@android:color/white"
     android:layout_height="wrap_content"
     android:padding="@dimen/sixTeen"
+
     android:layout_margin="8dp">
     <ImageView
         android:id="@+id/serviceIV"

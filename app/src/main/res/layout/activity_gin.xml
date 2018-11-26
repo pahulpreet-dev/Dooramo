@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="@android:color/white"
     tools:context=".LoginActivity">
 
 
@@ -32,7 +33,6 @@
     <EditText
         android:id="@+id/passwordeditText2"
         android:layout_width="match_parent"
-
         android:layout_below="@id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_height="40dp"

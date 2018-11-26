@@ -21,6 +21,7 @@ public class CreateUser2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user2);
+        setTitle("Create New User");
         getExtras();
         initComponents();
         createUserBtn.setOnClickListener(new View.OnClickListener() {

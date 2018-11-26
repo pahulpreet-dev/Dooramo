@@ -14,6 +14,7 @@ public class ManagementHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_management_home);
+        setTitle("Dooramo Management");
         initComponents();
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override

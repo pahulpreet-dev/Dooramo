@@ -17,8 +17,11 @@ public class CreateManager extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_create_manager);
+        setTitle("Create New Manager");
         initializeComponents();
+
         createManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
