@@ -37,11 +37,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 "varchar (100), 'service' varchar(100), 'name' varchar(100), 'email' varchar(100)," +
                 " 'contact' varchar(100), 'aptNo' varchar(100))";
 
+        String createServiceProviderQ = "create table if not exists 'serviceProviderInfo'('srno' " +
+                "integer primary key AUTOINCREMENT" +
+                ", 'name' varchar(100), 'phone' varchar(100), 'email' varchar(100)," +
+                "'service' varchar(100), 'username' varchar(100))";
+
+        String createServiceProviderAccountQ = "create table if not exists " +
+                "'serviceProviderAccount'('srno' integer primary key AUTOINCREMENT" +
+                ", 'username' varchar(100), 'password' varchar(100))";
+
         try {
             db.execSQL(createUserDetailsQ);
             db.execSQL(createUsernameQ);
             db.execSQL(createManagerQuery);
             db.execSQL(createRequestQuery);
+            db.execSQL(createServiceProviderQ);
+            db.execSQL(createServiceProviderAccountQ);
         } catch (Exception e) {
             Toast.makeText(con,"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
         }
@@ -121,5 +132,26 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put("status", status);
         return dbcall.update("requests", cv, "srno = " + id, null);
+    }
+
+    public long createServiceProvider(String name,String phone, String email, String service, String username)
+    {
+
+        ContentValues cv=new ContentValues();
+        cv.put("name",name);
+        cv.put("phone", phone);
+        cv.put("email",email);
+        cv.put("service", service);
+        cv.put("username", username);
+        return dbcall.insert("serviceProviderInfo",null,cv);
+    }
+
+    public long createServiceProviderAccount(String username, String password)
+    {
+
+        ContentValues cv=new ContentValues();
+        cv.put("username", username);
+        cv.put("password", password);
+        return dbcall.insert("serviceProviderAccount",null,cv);
     }
 }

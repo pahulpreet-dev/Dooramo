@@ -43,4 +43,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Manager" />
+
+    <Button
+        android:id="@+id/SPbuttonMH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
+        android:text="Create Service Provider"
+        android:textColor="@android:color/white" />
 </LinearLayout>

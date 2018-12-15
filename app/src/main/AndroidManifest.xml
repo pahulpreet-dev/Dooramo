@@ -24,7 +24,10 @@
         <activity android:name=".CreateManager" />
         <activity android:name=".CheckRequests" />
         <activity android:name=".RequestDetails" />
-        <activity android:name=".SelectProviders"></activity>
+        <activity android:name=".SelectProviders" />
+        <activity android:name=".CreateServiceProvider" />
+        <activity android:name=".CreateServiceProvider2" />
+        <activity android:name=".ProviderHome"></activity>
     </application>
 
 </manifest>

@@ -17,6 +17,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginBtn;
     EditText username, password;
     private int intentFlag;
+    private String service;
     //LoginActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,11 @@ public class LoginActivity extends AppCompatActivity {
                     } else if (intentFlag == 1) {
                         Intent intent = new Intent(LoginActivity.this, ManagementHome.class);
                         finish();
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else if (intentFlag == 2) {
+                        Intent intent = new Intent(LoginActivity.this, ProviderHome.class);
+                        intent.putExtra("service", service);
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -108,8 +113,21 @@ public class LoginActivity extends AppCompatActivity {
                 intentFlag = 1;
                 return true;
             } else {
-                username.setError("Invalid Username/Password");
-                return false;
+                String queryS = "select * from serviceProviderAccount where username = '" + username.getText().toString()
+                        + "' AND password = '" + password.getText().toString() + "'";
+                Cursor nextS = dbcall.rawQuery(queryS, null);
+                if(nextS.moveToNext()) {
+                    String queryS2 = "select * from serviceProviderInfo where username = '" + username.getText().toString() + "'";
+                    Cursor nextS2 = dbcall.rawQuery(queryS2, null);
+                    if(nextS2.moveToNext()) {
+                        service = nextS2.getString(nextS2.getColumnIndex("service"));
+                    }
+                    intentFlag = 2;
+                    return true;
+                } else {
+                    username.setError("Invalid Username/Password");
+                    return false;
+                }
             }
             //return false;
         }
