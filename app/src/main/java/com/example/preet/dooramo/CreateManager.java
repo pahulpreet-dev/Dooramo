@@ -3,17 +3,34 @@ package com.example.preet.dooramo;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class CreateManager extends AppCompatActivity {
 
-    EditText username, password;
+    EditText username, passwordet;
     Button createManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,51 +42,80 @@ public class CreateManager extends AppCompatActivity {
         createManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()) {
-                    if(checkManagerExistence())
-                        createManagerr();
+                if (validate()) {
+                    String _username = username.getText().toString();
+                    String password = passwordet.getText().toString();
+                    createManagerFirebase(_username, password);
                 }
             }
         });
     }
 
-    private boolean checkManagerExistence() {
-        DBHelper dbHelper = new DBHelper(CreateManager.this);
-        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
+    private void createManagerFirebase(final String _username, final String password) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("managerAccount/usernames");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(_username)) {
+                    Toast.makeText(CreateManager.this, "Username exist", Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("managerAccount");
+                    //ref.child("usernames").child(_username);
+                    ref.child("usernames").child(_username).child("password").setValue(password);
+                    Toast.makeText(CreateManager.this, "Manager account created successfully"
+                            , Toast.LENGTH_SHORT).show();
+                    Intent close = new Intent(CreateManager.this, ManagementHome.class);
+                    close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(close);
+                }
+            }
 
-        String query = "select * from 'managerAccount' where 'username' = '" + username.getText().toString() + "'";
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        Cursor next = dbcall.rawQuery(query, null);
-        if(next.moveToNext()) {
-            username.setError("Selected username already exists");
-            return false;
-        } else
-            return true;
+            }
+        });
+
+
     }
 
-    private void createManagerr() {
-        DBHelper dbHelper = new DBHelper(CreateManager.this);
-        dbHelper.caller();
-        long status = -1;
+//    private boolean checkManagerExistence() {
+//        DBHelper dbHelper = new DBHelper(CreateManager.this);
+//        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
+//
+//        String query = "select * from 'managerAccount' where 'username' = '" + username.getText().toString() + "'";
+//
+//        Cursor next = dbcall.rawQuery(query, null);
+//        if(next.moveToNext()) {
+//            username.setError("Selected username already exists");
+//            return false;
+//        } else
+//            return true;
+//    }
 
-        status = dbHelper.createManager(username.getText().toString(), password.getText().toString());
-        if(status > 0) {
-            Toast.makeText(this, "New manager account has been created successfully",
-                    Toast.LENGTH_SHORT).show();
-            Intent close = new Intent(CreateManager.this, ManagementHome.class);
-            close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(close);
-        }
-        else
-            Toast.makeText(this, "Error. Please contact developer.", Toast.LENGTH_SHORT).show();
-    }
+//    private void createManagerr() {
+//        DBHelper dbHelper = new DBHelper(CreateManager.this);
+//        dbHelper.caller();
+//        long status = -1;
+//
+//        status = dbHelper.createManager(username.getText().toString(), password.getText().toString());
+//        if(status > 0) {
+//            Toast.makeText(this, "New manager account has been created successfully",
+//                    Toast.LENGTH_SHORT).show();
+//            Intent close = new Intent(CreateManager.this, ManagementHome.class);
+//            close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            startActivity(close);
+//        }
+//        else
+//            Toast.makeText(this, "Error. Please contact developer.", Toast.LENGTH_SHORT).show();
+//    }
 
     private boolean validate() {
-        if(username.getText().toString().length() < 1) {
+        if (username.getText().toString().length() < 1) {
             username.setError("Enter username");
             return false;
-        } else if(password.getText().toString().length() <= 5) {
-            password.setError("Password must be of length 5");
+        } else if (passwordet.getText().toString().length() <= 5) {
+            passwordet.setError("Password must be of length 5");
             return false;
         }
         return true;
@@ -78,7 +124,7 @@ public class CreateManager extends AppCompatActivity {
 
     private void initializeComponents() {
         username = findViewById(R.id.unameeditTextCM);
-        password = findViewById(R.id.passeditTextCM);
+        passwordet = findViewById(R.id.passeditTextCM);
         createManager = findViewById(R.id.createbuttonCM);
     }
 }

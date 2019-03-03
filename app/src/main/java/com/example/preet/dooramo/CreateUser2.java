@@ -3,6 +3,7 @@ package com.example.preet.dooramo;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateUser2 extends AppCompatActivity {
 
@@ -27,60 +37,95 @@ public class CreateUser2 extends AppCompatActivity {
         createUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()) {
-                    if(checkUserExistance()) {
-                        createUserNow();
-                    }
+                if (validate()) {
+                    createUserNowFirebase();
+
                 }
             }
         });
 
     }
 
-    private void createUserNow() {
-        DBHelper dbHelper = new DBHelper(CreateUser2.this);
-        dbHelper.caller();
-        long status = -1;
+    private void createUserNowFirebase() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("userAccount/usernames");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String mUsername = username.getText().toString();
+                String mPassword = password.getText().toString();
+                if (dataSnapshot.hasChild(mUsername)) {
+                    Toast.makeText(CreateUser2.this, "Username exist", Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("userAccount/usernames");
+                    ref.child(mUsername).child("password").setValue(mPassword);
 
-        status = dbHelper.createUserDetails(name, dob, email, aptNo, number, username.getText().toString());
-        if(status > 0) {
-            long status1 = -1;
-            dbHelper.caller();
-            status1 = dbHelper.createUsername(username.getText().toString(), password.getText().toString());
-            if(status1 > 0) {
-                Toast.makeText(this, "New user account has been created successfully",
-                        Toast.LENGTH_SHORT).show();
-                Intent close = new Intent(CreateUser2.this, ManagementHome.class);
-                close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(close);
-            } else {
-                Toast.makeText(this, "Error. Please contact developer. 1", Toast.LENGTH_SHORT).show();
+                    DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("userInfo/usernames");
+                    Map<String, String> userInfo = new HashMap<>();
+                    userInfo.put("name", name);
+                    userInfo.put("Date of Birth", dob);
+                    userInfo.put("email", email);
+                    userInfo.put("number", number);
+                    userInfo.put("apartment number", aptNo);
+                    ref2.child(mUsername).setValue(userInfo);
+
+                    Toast.makeText(CreateUser2.this, "New user account has been created successfully",
+                            Toast.LENGTH_SHORT).show();
+                    Intent close = new Intent(CreateUser2.this, ManagementHome.class);
+                    close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(close);
+                }
             }
-        }
-        else
-            Toast.makeText(this, "Error. Please contact developer. 2", Toast.LENGTH_SHORT).show();
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
-    private boolean checkUserExistance() {
-        DBHelper dbHelper = new DBHelper(CreateUser2.this);
-        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
-
-        String query = "select * from 'userAccount' where 'username' = '" + username.getText().toString() + "'";
-
-        Cursor next = dbcall.rawQuery(query, null);
-        if(next.moveToNext()) {
-            username.setError("Selected username already exists");
-            return false;
-        } else
-            return true;
-
-    }
+//    private void createUserNow() {
+//        DBHelper dbHelper = new DBHelper(CreateUser2.this);
+//        dbHelper.caller();
+//        long status = -1;
+//
+//        status = dbHelper.createUserDetails(name, dob, email, aptNo, number, username.getText().toString());
+//        if (status > 0) {
+//            long status1 = -1;
+//            dbHelper.caller();
+//            status1 = dbHelper.createUsername(username.getText().toString(), password.getText().toString());
+//            if (status1 > 0) {
+//                Toast.makeText(this, "New user account has been created successfully",
+//                        Toast.LENGTH_SHORT).show();
+//                Intent close = new Intent(CreateUser2.this, ManagementHome.class);
+//                close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(close);
+//            } else {
+//                Toast.makeText(this, "Error. Please contact developer. 1", Toast.LENGTH_SHORT).show();
+//            }
+//        } else
+//            Toast.makeText(this, "Error. Please contact developer. 2", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    private boolean checkUserExistance() {
+//        DBHelper dbHelper = new DBHelper(CreateUser2.this);
+//        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
+//
+//        String query = "select * from 'userAccount' where 'username' = '" + username.getText().toString() + "'";
+//
+//        Cursor next = dbcall.rawQuery(query, null);
+//        if (next.moveToNext()) {
+//            username.setError("Selected username already exists");
+//            return false;
+//        } else
+//            return true;
+//
+//    }
 
     private boolean validate() {
-        if(username.getText().toString().length() < 1) {
+        if (username.getText().toString().length() < 1) {
             username.setError("Enter username");
             return false;
-        } else if(password.getText().toString().length() <= 5) {
+        } else if (password.getText().toString().length() <= 5) {
             password.setError("Password must be of length 5");
             return false;
         }
@@ -100,6 +145,6 @@ public class CreateUser2 extends AppCompatActivity {
         email = intent.getStringExtra("email");
         aptNo = intent.getStringExtra("aptNo");
         number = intent.getStringExtra("number");
-        Log.d("name",name);
+        Log.d("name", name);
     }
 }

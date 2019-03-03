@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "209482348097",
+    "firebase_url": "https://dooramo-f8a2c.firebaseio.com",
+    "project_id": "dooramo-f8a2c",
+    "storage_bucket": "dooramo-f8a2c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209482348097:android:2efde380c6756c23",
+        "android_client_info": {
+          "package_name": "com.example.preet.dooramo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209482348097-ehd35uk95kq929jas6s20ea23mkkpg7i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.preet.dooramo",
+            "certificate_hash": "6fd88fbb3e05f02451f25c236f47a026e09ad51a"
+          }
+        },
+        {
+          "client_id": "209482348097-uggtmv7h27mo3gusrh6rtcskqhf3tr8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE4TkDUy7GcFcptYVv9_L17kGHtgxjcrE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209482348097-uggtmv7h27mo3gusrh6rtcskqhf3tr8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

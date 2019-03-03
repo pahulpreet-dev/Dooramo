@@ -5,10 +5,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateServiceProvider2 extends Activity {
 
@@ -25,52 +35,90 @@ public class CreateServiceProvider2 extends Activity {
             @Override
             public void onClick(View v) {
                 if(valid()) {
-                    if(checkExisting()) {
-                        createNow();
-                    }
+                        createNowFirebase();
                 }
             }
         });
     }
 
-    private void createNow() {
-        DBHelper dbHelper = new DBHelper(CreateServiceProvider2.this);
-        dbHelper.caller();
-        long status = -1;
+    private void createNowFirebase() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                .child("serviceProviderAccount/usernames");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String mUsername = uname.getText().toString();
+                String mPassword = password.getText().toString();
+                if (dataSnapshot.hasChild(mUsername)) {
+                    Toast.makeText(CreateServiceProvider2.this, "Username exist", Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                            .child("serviceProviderAccount/usernames");
+                    ref.child(mUsername).child("password").setValue(mPassword);
 
-        status = dbHelper.createServiceProvider(name, phone, email, service, uname.getText().toString());
-        if(status > 0) {
-            long status1 = -1;
-            dbHelper.caller();
-            status1 = dbHelper.createServiceProviderAccount(uname.getText().toString(), password.getText().toString());
-            if(status1 > 0) {
-                Toast.makeText(this, "New service provider account has been created successfully",
-                        Toast.LENGTH_SHORT).show();
-                Intent close = new Intent(CreateServiceProvider2.this, ManagementHome.class);
-                close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(close);
-            } else {
-                Toast.makeText(this, "Error. Please contact developer. 1", Toast.LENGTH_SHORT).show();
+                    DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference()
+                            .child("serviceProviderInfo/usernames");
+                    Map<String, String> userInfo = new HashMap<>();
+                    userInfo.put("name", name);
+                    userInfo.put("phone", phone);
+                    userInfo.put("email", email);
+                    userInfo.put("service provided", service);
+                    ref2.child(mUsername).setValue(userInfo);
+
+                    Toast.makeText(CreateServiceProvider2.this,
+                            "New service provider account has been created successfully",
+                            Toast.LENGTH_SHORT).show();
+                    Intent close = new Intent(CreateServiceProvider2.this, ManagementHome.class);
+                    close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(close);
+                }
             }
-        }
-        else
-            Toast.makeText(this, "Error. Please contact developer. 2", Toast.LENGTH_SHORT).show();
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
-    private boolean checkExisting() {
-        DBHelper dbHelper = new DBHelper(CreateServiceProvider2.this);
-        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
-
-        String query = "select * from 'serviceProviderAccount' where 'username' = '" +
-                uname.getText().toString() + "'";
-
-        Cursor next = dbcall.rawQuery(query, null);
-        if(next.moveToNext()) {
-            uname.setError("Selected username already exists");
-            return false;
-        } else
-            return true;
-    }
+//    private void createNow() {
+//        DBHelper dbHelper = new DBHelper(CreateServiceProvider2.this);
+//        dbHelper.caller();
+//        long status = -1;
+//
+//        status = dbHelper.createServiceProvider(name, phone, email, service, uname.getText().toString());
+//        if(status > 0) {
+//            long status1 = -1;
+//            dbHelper.caller();
+//            status1 = dbHelper.createServiceProviderAccount(uname.getText().toString(), password.getText().toString());
+//            if(status1 > 0) {
+//                Toast.makeText(this, "New service provider account has been created successfully",
+//                        Toast.LENGTH_SHORT).show();
+//                Intent close = new Intent(CreateServiceProvider2.this, ManagementHome.class);
+//                close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(close);
+//            } else {
+//                Toast.makeText(this, "Error. Please contact developer. 1", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//        else
+//            Toast.makeText(this, "Error. Please contact developer. 2", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    private boolean checkExisting() {
+//        DBHelper dbHelper = new DBHelper(CreateServiceProvider2.this);
+//        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
+//
+//        String query = "select * from 'serviceProviderAccount' where 'username' = '" +
+//                uname.getText().toString() + "'";
+//
+//        Cursor next = dbcall.rawQuery(query, null);
+//        if(next.moveToNext()) {
+//            uname.setError("Selected username already exists");
+//            return false;
+//        } else
+//            return true;
+//    }
 
     private boolean valid() {
         if (uname.getText().toString().length() < 2) {
