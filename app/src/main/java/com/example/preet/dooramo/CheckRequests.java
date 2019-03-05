@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -56,29 +63,61 @@ public class CheckRequests extends AppCompatActivity {
     }
 
     private void getData() {
-        DBHelper dbHelper = new DBHelper(CheckRequests.this);
-        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
 
-        String query = "select * from requests";
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("requests");
 
-        Cursor next = dbcall.rawQuery(query, null);
-        if(next.moveToNext()) {
-            do {
-                requests.add(next.getString(next.getColumnIndex("request")));
-                dateTime.add(next.getString(next.getColumnIndex("dateTime")));
-                ids.add(next.getString(next.getColumnIndex("srno")));
-                statuses.add(next.getString(next.getColumnIndex("status")));
-                names.add(next.getString(next.getColumnIndex("name")));
-                emails.add(next.getString(next.getColumnIndex("email")));
-                contacts.add(next.getString(next.getColumnIndex("contact")));
-                aptNos.add(next.getString(next.getColumnIndex("aptNo")));
-                services.add(next.getString(next.getColumnIndex("service")));
-            } while (next.moveToNext());
-        } else
-        {
-            norequest.setVisibility(View.VISIBLE);
-            requestList.setVisibility(View.GONE);
-        }
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChildren()){
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        ids.add(ds.getKey());
+                        requests.add(ds.child("request").getValue(String.class));
+                        dateTime.add(ds.child("dateTime").getValue(String.class));
+                        statuses.add(ds.child("status").getValue(String.class));
+                        names.add(ds.child("name").getValue(String.class));
+                        emails.add(ds.child("email").getValue(String.class));
+                        contacts.add(ds.child("contact").getValue(String.class));
+                        aptNos.add(ds.child("apartment number").getValue(String.class));
+                        services.add(ds.child("service").getValue(String.class));
+                    }
+                    requestList.setAdapter(new Adapter(CheckRequests.this));
+                } else {
+                    norequest.setVisibility(View.VISIBLE);
+                    requestList.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+//        DBHelper dbHelper = new DBHelper(CheckRequests.this);
+//        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
+//
+//        String query = "select * from requests";
+//
+//        Cursor next = dbcall.rawQuery(query, null);
+//        if(next.moveToNext()) {
+//            do {
+//                requests.add(next.getString(next.getColumnIndex("request")));
+//                dateTime.add(next.getString(next.getColumnIndex("dateTime")));
+//                ids.add(next.getString(next.getColumnIndex("srno")));
+//                statuses.add(next.getString(next.getColumnIndex("status")));
+//                names.add(next.getString(next.getColumnIndex("name")));
+//                emails.add(next.getString(next.getColumnIndex("email")));
+//                contacts.add(next.getString(next.getColumnIndex("contact")));
+//                aptNos.add(next.getString(next.getColumnIndex("aptNo")));
+//                services.add(next.getString(next.getColumnIndex("service")));
+//            } while (next.moveToNext());
+//        } else
+//        {
+//            norequest.setVisibility(View.VISIBLE);
+//            requestList.setVisibility(View.GONE);
+//        }
     }
 
     class Adapter extends BaseAdapter {
