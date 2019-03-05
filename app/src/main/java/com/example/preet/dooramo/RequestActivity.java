@@ -11,9 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestActivity extends AppCompatActivity {
     private String serviceRequest, name, aptNo, email, contact, username;
@@ -41,28 +46,50 @@ public class RequestActivity extends AppCompatActivity {
     }
 
     private void sendRequestToManagement() {
-        DBHelper dbHelper = new DBHelper(RequestActivity.this);
-        dbHelper.caller();
-        long status = -1;
+        getDetailsFromPreferences();
 
         //getting date and time
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd MMMM, yyyy - hh:mm");
         String formattedDate = df.format(c);
-        Log.d("DATEEE", formattedDate);
 
-        getDetailsFromPreferences();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                .child("requests");
 
-        status = dbHelper.createRequest(username, explainET.getText().toString(), "Pending",
-                formattedDate, serviceRequest, name, email, contact, aptNo);
-        if(status > 0) {
-            Toast.makeText(RequestActivity.this, "Request has been sent" +
-                            " to the management", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RequestActivity.this, ServicesActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-        } else {
-            Toast.makeText(this, "Error. contact developer", Toast.LENGTH_SHORT).show();
-        }
+        Map<String, String> data = new HashMap<>();
+        data.put("username", username);
+        data.put("request", explainET.getText().toString());
+        data.put("status", "Pending");
+        data.put("dateTime", formattedDate);
+        data.put("service", serviceRequest);
+        data.put("name", name);
+        data.put("email", email);
+        data.put("contact", contact);
+        data.put("apartment number", aptNo);
+
+        databaseReference.push().setValue(data);
+
+        Toast.makeText(RequestActivity.this, "Request has been sent" +
+                " to the management", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(RequestActivity.this, ServicesActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+//        DBHelper dbHelper = new DBHelper(RequestActivity.this);
+//        dbHelper.caller();
+//        long status = -1;
+//
+
+//        Log.d("DATEEE", formattedDate);
+//
+//
+//
+//        status = dbHelper.createRequest(username, explainET.getText().toString(), "Pending",
+//                formattedDate, serviceRequest, name, email, contact, aptNo);
+//        if(status > 0) {
+
+//        } else {
+//            Toast.makeText(this, "Error. contact developer", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     private void getDetailsFromPreferences() {
