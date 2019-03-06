@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,11 +28,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ProviderHome extends AppCompatActivity {
-    private ArrayList<String> requests, ids, aptNos, contacts, emails, services, dateTime, statuses, names;
+    private ArrayList<String> requests, ids, aptNos, contacts, emails, services, dateTime,
+            statuses, names;
 
     ListView requestList;
     TextView norequest;
     private String serviceTitle;
+    Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,9 @@ public class ProviderHome extends AppCompatActivity {
         serviceTitle = getIntent().getStringExtra("service");
         getData();
 
+        adapter = new Adapter(ProviderHome.this);
 
-        requestList.setAdapter(new Adapter(ProviderHome.this));
+        requestList.setAdapter(adapter);
         requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -62,13 +66,15 @@ public class ProviderHome extends AppCompatActivity {
     }
 
     private void getData() {
-
+        clearLists();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("requests");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                clearLists();
+                requestList.setAdapter(adapter);
                 if(dataSnapshot.hasChildren()){
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         String serviceCheck = ds.child("service").getValue(String.class);
@@ -86,12 +92,11 @@ public class ProviderHome extends AppCompatActivity {
                         }
                     }
                     if(requests.size() > 0) {
-                        requestList.setAdapter(new Adapter(ProviderHome.this));
+                        requestList.setAdapter(adapter);
                     } else {
                         norequest.setVisibility(View.VISIBLE);
                         requestList.setVisibility(View.GONE);
                     }
-
                 } else {
                     norequest.setVisibility(View.VISIBLE);
                     requestList.setVisibility(View.GONE);
@@ -130,6 +135,21 @@ public class ProviderHome extends AppCompatActivity {
 //            norequest.setVisibility(View.VISIBLE);
 //            requestList.setVisibility(View.GONE);
 //        }
+    }
+
+    private void clearLists() {
+
+        ids.clear();
+        requests.clear();
+        services.clear();
+        statuses.clear();
+        names.clear();
+        emails.clear();
+        contacts.clear();
+        aptNos.clear();
+        dateTime.clear();
+        adapter.notifyDataSetChanged();
+        //Toast.makeText(this, "CLEARED", Toast.LENGTH_SHORT).show();
     }
 
     class Adapter extends BaseAdapter {

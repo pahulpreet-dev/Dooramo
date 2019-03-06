@@ -10,6 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class RequestDetails extends AppCompatActivity {
 
     TextView reqTv, nameTv, serviceTv, emailTv, contactTv, aptNoTv, statusTv, dateTv;
@@ -34,7 +40,7 @@ public class RequestDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RequestDetails.this);
-                builder.setMessage("COnfirm status update to: Done")
+                builder.setMessage("Confirm status update to: Done")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 statusUpdate();
@@ -53,14 +59,23 @@ public class RequestDetails extends AppCompatActivity {
     }
 
     private void statusUpdate() {
-        DBHelper dbHelper = new DBHelper(RequestDetails.this);
-        dbHelper.caller();
-        long status = -1;
-        status = dbHelper.updateRequestStatus(getIntent().getStringExtra("id"), "Done");
-        if(status > 0) {
-            Toast.makeText(this, "Status updated", Toast.LENGTH_SHORT).show();
-            statusTv.setText("Status: Done");
-        }
+
+        Map<String,Object> taskMap = new HashMap<>();
+        taskMap.put("status", "Done");
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("requests");
+        reference.child(getIntent().getStringExtra("id")).updateChildren(taskMap);
+        statusTv.setText("Status: Done");
+
+//        DBHelper dbHelper = new DBHelper(RequestDetails.this);
+//        dbHelper.caller();
+//        long status = -1;
+//        status = dbHelper.updateRequestStatus(getIntent().getStringExtra("id"), "Done");
+//        if(status > 0) {
+//            Toast.makeText(this, "Status updated", Toast.LENGTH_SHORT).show();
+//            statusTv.setText("Status: Done");
+//        }
     }
 
     private void initComponents() {
