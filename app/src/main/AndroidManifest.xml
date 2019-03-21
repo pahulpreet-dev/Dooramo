@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.preet.dooramo">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,7 +29,8 @@
         <activity android:name=".SelectProviders" />
         <activity android:name=".CreateServiceProvider" />
         <activity android:name=".CreateServiceProvider2" />
-        <activity android:name=".ProviderHome"></activity>
+        <activity android:name=".ProviderHome" />
+        <activity android:name=".ResidentMyJobs"></activity>
     </application>
 
 </manifest>

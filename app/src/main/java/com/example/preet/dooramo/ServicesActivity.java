@@ -17,8 +17,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.zip.Inflater;
-
 public class ServicesActivity extends AppCompatActivity {
     GridView gridViewSA;
     int[] images;
@@ -85,18 +83,18 @@ public class ServicesActivity extends AppCompatActivity {
         imageNames = new String[]{"Carpenter", "Electrician", "Plumber"};
     }
 
-    //logout option in menu
+    //resident_menu option in menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.logout, menu);
+        inflater.inflate(R.menu.resident_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.logoutMenu) {
-            //logout code goes here
+            //resident_menu code goes here
             SharedPreferences sharedPref = ServicesActivity.this.getSharedPreferences("ForLogin",
                     Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -106,6 +104,9 @@ public class ServicesActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             finish();
             startActivity(intent);
+        }
+        else if(item.getItemId() == R.id.myJobsMenu) {
+            startActivity(new Intent(ServicesActivity.this, ResidentMyJobs.class));
         }
         return super.onOptionsItemSelected(item);
     }

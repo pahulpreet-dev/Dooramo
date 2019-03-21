@@ -27,6 +27,11 @@ public class RequestDetails extends AppCompatActivity {
         setTitle("View request details");
         initComponents();
         Intent get = getIntent();
+
+        if(get.getStringExtra("residentFlag").equals("resident")) {
+            updateStatus.setVisibility(View.GONE);
+        }
+
         reqTv.setText(get.getStringExtra("request"));
         nameTv.setText(nameTv.getText().toString() + get.getStringExtra("name"));
         serviceTv.setText(serviceTv.getText().toString() + get.getStringExtra("service"));
