@@ -30,7 +30,8 @@
         <activity android:name=".CreateServiceProvider" />
         <activity android:name=".CreateServiceProvider2" />
         <activity android:name=".ProviderHome" />
-        <activity android:name=".ResidentMyJobs"></activity>
+        <activity android:name=".ResidentMyJobs" />
+        <activity android:name=".ResidentSignUp"></activity>
     </application>
 
 </manifest>

@@ -46,6 +46,7 @@ public class CreateUser2 extends AppCompatActivity {
 
     }
 
+    //sign up new user
     private void createUserNowFirebase() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("userAccount/usernames");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,44 +84,7 @@ public class CreateUser2 extends AppCompatActivity {
         });
     }
 
-//    private void createUserNow() {
-//        DBHelper dbHelper = new DBHelper(CreateUser2.this);
-//        dbHelper.caller();
-//        long status = -1;
-//
-//        status = dbHelper.createUserDetails(name, dob, email, aptNo, number, username.getText().toString());
-//        if (status > 0) {
-//            long status1 = -1;
-//            dbHelper.caller();
-//            status1 = dbHelper.createUsername(username.getText().toString(), password.getText().toString());
-//            if (status1 > 0) {
-//                Toast.makeText(this, "New user account has been created successfully",
-//                        Toast.LENGTH_SHORT).show();
-//                Intent close = new Intent(CreateUser2.this, ManagementHome.class);
-//                close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(close);
-//            } else {
-//                Toast.makeText(this, "Error. Please contact developer. 1", Toast.LENGTH_SHORT).show();
-//            }
-//        } else
-//            Toast.makeText(this, "Error. Please contact developer. 2", Toast.LENGTH_SHORT).show();
-//    }
-//
-//    private boolean checkUserExistance() {
-//        DBHelper dbHelper = new DBHelper(CreateUser2.this);
-//        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
-//
-//        String query = "select * from 'userAccount' where 'username' = '" + username.getText().toString() + "'";
-//
-//        Cursor next = dbcall.rawQuery(query, null);
-//        if (next.moveToNext()) {
-//            username.setError("Selected username already exists");
-//            return false;
-//        } else
-//            return true;
-//
-//    }
-
+    //validate the inputs
     private boolean validate() {
         if (username.getText().toString().length() < 1) {
             username.setError("Enter username");
@@ -132,12 +96,14 @@ public class CreateUser2 extends AppCompatActivity {
         return true;
     }
 
+    //initialize the components
     private void initComponents() {
         username = findViewById(R.id.unameeditTextCU2);
         password = findViewById(R.id.passeditText2cu2);
         createUserBtn = findViewById(R.id.createbuttoncu2);
     }
 
+    //fetch the data passed from previous activity
     private void getExtras() {
         Intent intent = getIntent();
         name = intent.getStringExtra("name");

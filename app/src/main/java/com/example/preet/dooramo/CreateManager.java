@@ -51,16 +51,16 @@ public class CreateManager extends AppCompatActivity {
         });
     }
 
+    //sign up the new manager
     private void createManagerFirebase(final String _username, final String password) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("managerAccount/usernames");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(_username)) {
+                if (dataSnapshot.hasChild(_username)) {
                     Toast.makeText(CreateManager.this, "Username exist", Toast.LENGTH_SHORT).show();
                 } else {
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("managerAccount");
-                    //ref.child("usernames").child(_username);
                     ref.child("usernames").child(_username).child("password").setValue(password);
                     Toast.makeText(CreateManager.this, "Manager account created successfully"
                             , Toast.LENGTH_SHORT).show();
@@ -79,37 +79,7 @@ public class CreateManager extends AppCompatActivity {
 
     }
 
-//    private boolean checkManagerExistence() {
-//        DBHelper dbHelper = new DBHelper(CreateManager.this);
-//        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
-//
-//        String query = "select * from 'managerAccount' where 'username' = '" + username.getText().toString() + "'";
-//
-//        Cursor next = dbcall.rawQuery(query, null);
-//        if(next.moveToNext()) {
-//            username.setError("Selected username already exists");
-//            return false;
-//        } else
-//            return true;
-//    }
-
-//    private void createManagerr() {
-//        DBHelper dbHelper = new DBHelper(CreateManager.this);
-//        dbHelper.caller();
-//        long status = -1;
-//
-//        status = dbHelper.createManager(username.getText().toString(), password.getText().toString());
-//        if(status > 0) {
-//            Toast.makeText(this, "New manager account has been created successfully",
-//                    Toast.LENGTH_SHORT).show();
-//            Intent close = new Intent(CreateManager.this, ManagementHome.class);
-//            close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivity(close);
-//        }
-//        else
-//            Toast.makeText(this, "Error. Please contact developer.", Toast.LENGTH_SHORT).show();
-//    }
-
+    //input validations
     private boolean validate() {
         if (username.getText().toString().length() < 1) {
             username.setError("Enter username");
@@ -121,7 +91,7 @@ public class CreateManager extends AppCompatActivity {
         return true;
     }
 
-
+    //initialize the components
     private void initializeComponents() {
         username = findViewById(R.id.unameeditTextCM);
         passwordet = findViewById(R.id.passeditTextCM);

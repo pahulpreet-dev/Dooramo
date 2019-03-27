@@ -64,6 +64,7 @@ public class SelectProviders extends AppCompatActivity {
         });
 
     }
+    //inner class for list view adapter
     class Adapter extends BaseAdapter {
 
         Context context;
@@ -112,6 +113,7 @@ public class SelectProviders extends AppCompatActivity {
             return v;
         }
     }
+    //initialize the components
     private void initComponents() {
         carpenter = findViewById(R.id.carpenterbuttonsp);
         electrician = findViewById(R.id.electricianbutton3SP);

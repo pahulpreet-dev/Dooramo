@@ -9,6 +9,7 @@ import android.widget.Button;
 public class ManagementHome extends AppCompatActivity {
 
     Button newUser, createManager, checkRequest, requestProviders, createService;
+
     //ManagementHome
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,37 +17,44 @@ public class ManagementHome extends AppCompatActivity {
         setContentView(R.layout.activity_management_home);
         setTitle("Dooramo Management");
         initComponents();
+        //click listener for create new user
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ManagementHome.this, CreateUser.class));
             }
         });
+        //click listener for create new manager
         createManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ManagementHome.this, CreateManager.class));
             }
         });
+        //click listener for check requests
         checkRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ManagementHome.this, CheckRequests.class));
             }
         });
+        //click listener for select providers
         requestProviders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ManagementHome.this, SelectProviders.class));
             }
         });
+        //click listener for create new service provider
         createService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ManagementHome.this, CreateServiceProvider.class));
             }
-        });    }
+        });
+    }
 
+    //initialize the components
     private void initComponents() {
         newUser = findViewById(R.id.userbuttonMH);
         createManager = findViewById(R.id.managerbuttonMH);

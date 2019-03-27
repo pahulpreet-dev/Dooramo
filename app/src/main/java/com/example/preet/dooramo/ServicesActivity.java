@@ -40,6 +40,7 @@ public class ServicesActivity extends AppCompatActivity {
 
     }
 
+    //inner class for gridView adapter
     class Adapter extends BaseAdapter {
 
         Context context;
@@ -77,6 +78,7 @@ public class ServicesActivity extends AppCompatActivity {
         }
     }
 
+    //initialize the components
     private void initComponents() {
         gridViewSA = findViewById(R.id.gridViewSA);
         images = new int[]{R.drawable.carpenter, R.drawable.electrician, R.drawable.plumber};
@@ -91,6 +93,7 @@ public class ServicesActivity extends AppCompatActivity {
         return true;
     }
 
+    //click listener for menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.logoutMenu) {

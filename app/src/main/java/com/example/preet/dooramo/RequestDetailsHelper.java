@@ -2,6 +2,9 @@ package com.example.preet.dooramo;
 
 public class RequestDetailsHelper {
 
+    /**
+     * Beans helper class for request details
+     */
     private String request, id, aptNo, contact, email, service, dateTime, status, name;
 
     public RequestDetailsHelper(String request, String id, String aptNo, String contact,

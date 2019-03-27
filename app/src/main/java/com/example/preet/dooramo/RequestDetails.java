@@ -20,6 +20,7 @@ public class RequestDetails extends AppCompatActivity {
 
     TextView reqTv, nameTv, serviceTv, emailTv, contactTv, aptNoTv, statusTv, dateTv;
     Button updateStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +29,12 @@ public class RequestDetails extends AppCompatActivity {
         initComponents();
         Intent get = getIntent();
 
-        if(get.getStringExtra("residentFlag").equals("resident")) {
+        //check the flag, if the request is made by resident then the update button is not visible
+        if (get.getStringExtra("residentFlag").equals("resident")) {
             updateStatus.setVisibility(View.GONE);
         }
 
+        //populate the TextViews with the data
         reqTv.setText(get.getStringExtra("request"));
         nameTv.setText(nameTv.getText().toString() + get.getStringExtra("name"));
         serviceTv.setText(serviceTv.getText().toString() + get.getStringExtra("service"));
@@ -41,6 +44,7 @@ public class RequestDetails extends AppCompatActivity {
         statusTv.setText(statusTv.getText().toString() + get.getStringExtra("status"));
         dateTv.setText(dateTv.getText().toString() + get.getStringExtra("dateTime"));
 
+        //update the status for the request
         updateStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,26 +67,19 @@ public class RequestDetails extends AppCompatActivity {
 
     }
 
+    //status update in the database
     private void statusUpdate() {
 
-        Map<String,Object> taskMap = new HashMap<>();
+        Map<String, Object> taskMap = new HashMap<>();
         taskMap.put("status", "Done");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("requests");
         reference.child(getIntent().getStringExtra("id")).updateChildren(taskMap);
         statusTv.setText("Status: Done");
-
-//        DBHelper dbHelper = new DBHelper(RequestDetails.this);
-//        dbHelper.caller();
-//        long status = -1;
-//        status = dbHelper.updateRequestStatus(getIntent().getStringExtra("id"), "Done");
-//        if(status > 0) {
-//            Toast.makeText(this, "Status updated", Toast.LENGTH_SHORT).show();
-//            statusTv.setText("Status: Done");
-//        }
     }
 
+    //initialize the components
     private void initComponents() {
         reqTv = findViewById(R.id.requesttextView13RD);
         nameTv = findViewById(R.id.nametextView14RD);

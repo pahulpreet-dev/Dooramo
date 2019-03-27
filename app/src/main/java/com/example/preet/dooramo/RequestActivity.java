@@ -24,8 +24,8 @@ public class RequestActivity extends AppCompatActivity {
     private String serviceRequest, name, aptNo, email, contact, username;
     Button requestButton;
     EditText explainET;
+
     @Override
-    //just an update
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
@@ -36,19 +36,17 @@ public class RequestActivity extends AppCompatActivity {
         requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()) {
+                if (validate()) {
                     sendRequestToManagement();
-
-                    //request will be sent to management
                 }
             }
         });
     }
 
+    //create new request
     private void sendRequestToManagement() {
         getDetailsFromPreferences();
-
-        //getting date and time
+        //getting system date and time
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd MMMM, yyyy - hh:mm");
         String formattedDate = df.format(c);
@@ -73,25 +71,9 @@ public class RequestActivity extends AppCompatActivity {
                 " to the management", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(RequestActivity.this, ServicesActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
-//        DBHelper dbHelper = new DBHelper(RequestActivity.this);
-//        dbHelper.caller();
-//        long status = -1;
-//
-
-//        Log.d("DATEEE", formattedDate);
-//
-//
-//
-//        status = dbHelper.createRequest(username, explainET.getText().toString(), "Pending",
-//                formattedDate, serviceRequest, name, email, contact, aptNo);
-//        if(status > 0) {
-
-//        } else {
-//            Toast.makeText(this, "Error. contact developer", Toast.LENGTH_SHORT).show();
-//        }
     }
 
+    //fetch residet details from preferences
     private void getDetailsFromPreferences() {
         SharedPreferences sharedPref = RequestActivity.this.getSharedPreferences("ForLogin",
                 Context.MODE_PRIVATE);
@@ -102,14 +84,16 @@ public class RequestActivity extends AppCompatActivity {
         username = sharedPref.getString("name", "n");
     }
 
+    //validate the inputs
     private boolean validate() {
-        if(explainET.getText().toString().length() < 5) {
+        if (explainET.getText().toString().length() < 5) {
             explainET.setError("Please explain in detail");
             return false;
         } else
             return true;
     }
 
+    //initialize the components
     private void initComponents() {
         requestButton = findViewById(R.id.requestButtonUser);
         explainET = findViewById(R.id.explain_editText);

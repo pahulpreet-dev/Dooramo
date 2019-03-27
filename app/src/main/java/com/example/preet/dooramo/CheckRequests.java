@@ -35,12 +35,11 @@ import java.util.ArrayList;
 
 public class CheckRequests extends AppCompatActivity {
 
-    //private ArrayList<String> requests, ids, aptNos, contacts, emails, services, dateTime, statuses, names;
-
     private ArrayList<RequestDetailsHelper> requestsHelperArrayList;
 
     ListView requestList;
     TextView norequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +47,6 @@ public class CheckRequests extends AppCompatActivity {
         initialize();
         setTitle("View Requests");
         getData();
-        populateRequestHelperArrayList();
 
         requestList.setAdapter(new Adapter(CheckRequests.this, R.layout.request_layout_inflater,
                 requestsHelperArrayList));
@@ -70,20 +68,7 @@ public class CheckRequests extends AppCompatActivity {
         });
     }
 
-    private void populateRequestHelperArrayList() {
-//        for(int i=0; i < requests.size(); i++) {
-//            requestsHelperArrayList.add(new RequestDetailsHelper(requests.get(i),
-//                    ids.get(i),aptNos.get(i),contacts.get(i),emails.get(i),services.get(i)
-//                    ,dateTime.get(i),statuses.get(i),names.get(i)));
-//        }
-        for(RequestDetailsHelper item : requestsHelperArrayList) {
-            Log.d("asdf3", item.getRequest());
-            Log.d("asdf3", item.getAptNo());
-            Log.d("asdf3", item.getId());
-
-        }
-    }
-
+    //fetch all requests from database
     private void getData() {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
@@ -92,19 +77,9 @@ public class CheckRequests extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChildren()){
+                if (dataSnapshot.hasChildren()) {
                     RequestDetailsHelper data = null;
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                        ids.add(ds.getKey());
-//                        requests.add(ds.child("request").getValue(String.class));
-//                        dateTime.add(ds.child("dateTime").getValue(String.class));
-//                        statuses.add(ds.child("status").getValue(String.class));
-//                        names.add(ds.child("name").getValue(String.class));
-//                        emails.add(ds.child("email").getValue(String.class));
-//                        contacts.add(ds.child("contact").getValue(String.class));
-//                        aptNos.add(ds.child("apartment number").getValue(String.class));
-//                        services.add(ds.child("service").getValue(String.class));
-
                         data = new RequestDetailsHelper();
                         data.setId(ds.getKey());
                         Log.d("asdf", ds.getKey());
@@ -123,7 +98,6 @@ public class CheckRequests extends AppCompatActivity {
                     requestList.setAdapter(new Adapter(CheckRequests.this,
                             R.layout.request_layout_inflater,
                             requestsHelperArrayList));
-                    populateRequestHelperArrayList();
                 } else {
                     norequest.setVisibility(View.VISIBLE);
                     requestList.setVisibility(View.GONE);
@@ -136,31 +110,9 @@ public class CheckRequests extends AppCompatActivity {
             }
         });
 
-//        DBHelper dbHelper = new DBHelper(CheckRequests.this);
-//        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
-//
-//        String query = "select * from requests";
-//
-//        Cursor next = dbcall.rawQuery(query, null);
-//        if(next.moveToNext()) {
-//            do {
-//                requests.add(next.getString(next.getColumnIndex("request")));
-//                dateTime.add(next.getString(next.getColumnIndex("dateTime")));
-//                ids.add(next.getString(next.getColumnIndex("srno")));
-//                statuses.add(next.getString(next.getColumnIndex("status")));
-//                names.add(next.getString(next.getColumnIndex("name")));
-//                emails.add(next.getString(next.getColumnIndex("email")));
-//                contacts.add(next.getString(next.getColumnIndex("contact")));
-//                aptNos.add(next.getString(next.getColumnIndex("aptNo")));
-//                services.add(next.getString(next.getColumnIndex("service")));
-//            } while (next.moveToNext());
-//        } else
-//        {
-//            norequest.setVisibility(View.VISIBLE);
-//            requestList.setVisibility(View.GONE);
-//        }
     }
 
+    //inner class for adapter for the list view
     class Adapter extends ArrayAdapter<RequestDetailsHelper> {
 
         Context context;
@@ -171,23 +123,9 @@ public class CheckRequests extends AppCompatActivity {
             super(context, resource, objects);
 
             this.layoutResourceId = resource;
-            this.context= context;
-            this.items=objects;
+            this.context = context;
+            this.items = objects;
         }
-//        @Override
-//        public int getCount() {
-//            return items.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int position) {
-//            return null;
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return 0;
-//        }
 
         @NonNull
         @Override
@@ -200,7 +138,7 @@ public class CheckRequests extends AppCompatActivity {
             RequestDetailsHelper dataItem = items.get(position);
 
             String reqTemp = dataItem.getRequest();
-            if(reqTemp.length() > 25) {
+            if (reqTemp.length() > 25) {
                 for (int i = 0; i < reqTemp.length(); i += 25) {
                     reqTemp = reqTemp.substring(i, Math.min(i + 25, reqTemp.length()));
                 }
@@ -215,42 +153,18 @@ public class CheckRequests extends AppCompatActivity {
             status.setText(status.getText().toString() + dataItem.getStatus());
             TextView date = v.findViewById(R.id.datetextView16rli);
             date.setText(dataItem.getDateTime());
-
-//            String reqTemp = requests.get(position);
-//            if(reqTemp.length() > 25) {
-//                for (int i = 0; i < reqTemp.length(); i += 25) {
-//                    reqTemp = reqTemp.substring(i, Math.min(i + 25, reqTemp.length()));
-//                }
-//                reqTemp = reqTemp + "...";
-//            }
-//            requestTv.setText(reqTemp);
-//            TextView serviceTv = v.findViewById(R.id.sercvicetextView13RLi);
-//            serviceTv.setText(serviceTv.getText().toString() + services.get(position));
-//            TextView aptTv = v.findViewById(R.id.aptnotextView14rli);
-//            aptTv.setText(aptTv.getText().toString() + aptNos.get(position));
-//            TextView status = v.findViewById(R.id.statustextView15rli);
-//            status.setText(status.getText().toString() + statuses.get(position));
-//            TextView date = v.findViewById(R.id.datetextView16rli);
-//            date.setText(dateTime.get(position));
-
             return v;
         }
     }
 
+    //initialize components
     private void initialize() {
         requestList = findViewById(R.id.requestList);
-//        ids = new ArrayList<>();
-//        requests = new ArrayList<>();
-//        aptNos = new ArrayList<>();
-//        contacts = new ArrayList<>();
-//        emails = new ArrayList<>();
-//        services = new ArrayList<>();
-//        dateTime = new ArrayList<>();
-//        statuses = new ArrayList<>();
-//        names = new ArrayList<>();
         norequest = findViewById(R.id.norequestCR);
         requestsHelperArrayList = new ArrayList<>();
     }
+
+    //creating the three dot menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -278,14 +192,15 @@ public class CheckRequests extends AppCompatActivity {
         return true;
     }
 
+    //search bar function
     private void filterData(String query, SearchView searchView) {
         ArrayList<RequestDetailsHelper> filteredOutput = new ArrayList<>();
 
         ArrayList<RequestDetailsHelper> output = new ArrayList<>(requestsHelperArrayList);
 
-        if(searchView != null && !query.equalsIgnoreCase("")) {
-            for(RequestDetailsHelper item : output) {
-                if(item.getRequest().toLowerCase().startsWith(query.toLowerCase())) {
+        if (searchView != null && !query.equalsIgnoreCase("")) {
+            for (RequestDetailsHelper item : output) {
+                if (item.getRequest().toLowerCase().startsWith(query.toLowerCase())) {
                     filteredOutput.add(item);
                 }
             }
@@ -293,35 +208,22 @@ public class CheckRequests extends AppCompatActivity {
             filteredOutput = output;
         }
 
-        requestList.setAdapter(new Adapter(CheckRequests.this,R.layout.request_layout_inflater
+        requestList.setAdapter(new Adapter(CheckRequests.this, R.layout.request_layout_inflater
                 , filteredOutput));
     }
 
+    //click listener for three dot menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.pendingMenu) {
+        if (item.getItemId() == R.id.pendingMenu) {
             ArrayList<RequestDetailsHelper> filteredOutput = new ArrayList<>();
-            for(RequestDetailsHelper data: requestsHelperArrayList) {
-                if(data.getStatus().equalsIgnoreCase("pending")) {
+            for (RequestDetailsHelper data : requestsHelperArrayList) {
+                if (data.getStatus().equalsIgnoreCase("pending")) {
                     filteredOutput.add(data);
                 }
             }
-            requestList.setAdapter(new Adapter(CheckRequests.this,R.layout.request_layout_inflater,
+            requestList.setAdapter(new Adapter(CheckRequests.this, R.layout.request_layout_inflater,
                     filteredOutput));
-//            for(int i = 0; i < statuses.size(); i++) {
-//                if(!statuses.get(i).equalsIgnoreCase("pending")) {
-//                    requests.remove(i);
-//                    services.remove(i);
-//                    aptNos.remove(i);
-//                    statuses.remove(i);
-//                    dateTime.remove(i);
-//                    ids.remove(i);
-//                    contacts.remove(i);
-//                    emails.remove(i);
-//                    names.remove(i);
-//                }
-//            }
-//            requestList.setAdapter(new Adapter(CheckRequests.this));
         }
         return super.onOptionsItemSelected(item);
     }

@@ -61,6 +61,7 @@ public class ResidentMyJobs extends AppCompatActivity {
 
     }
 
+    //fetch the data from firebase
     private void getData() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("requests");
@@ -107,12 +108,14 @@ public class ResidentMyJobs extends AppCompatActivity {
         });
     }
 
+    //fetch resident name
     private String getResidentNameFromPreferences() {
         SharedPreferences sharedPref = ResidentMyJobs.this.getSharedPreferences("ForLogin",
                 Context.MODE_PRIVATE);
         return sharedPref.getString("name", "n");
     }
 
+    //initiliaze the components
     private void initComponents() {
         requestsList = new ArrayList<>();
         requestListView = findViewById(R.id.myJobsList);
@@ -120,6 +123,7 @@ public class ResidentMyJobs extends AppCompatActivity {
         adapter = new Adapter(ResidentMyJobs.this);
     }
 
+    //inner class for list view adapter
     private class Adapter extends BaseAdapter {
         Context context;
         public Adapter(Context _context) {

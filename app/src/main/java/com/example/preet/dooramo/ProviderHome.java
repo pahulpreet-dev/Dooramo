@@ -48,6 +48,7 @@ public class ProviderHome extends AppCompatActivity {
         adapter = new Adapter(ProviderHome.this);
 
         requestList.setAdapter(adapter);
+        //open and pass values to View Request Details activity
         requestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,6 +66,7 @@ public class ProviderHome extends AppCompatActivity {
         });
     }
 
+    //fetch data for the requests for service providers
     private void getData() {
         clearLists();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
@@ -75,11 +77,10 @@ public class ProviderHome extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 clearLists();
                 requestList.setAdapter(adapter);
-                if(dataSnapshot.hasChildren()){
+                if (dataSnapshot.hasChildren()) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         String serviceCheck = ds.child("service").getValue(String.class);
-                        if(serviceCheck.equalsIgnoreCase(serviceTitle))
-                        {
+                        if (serviceCheck.equalsIgnoreCase(serviceTitle)) {
                             ids.add(ds.getKey());
                             requests.add(ds.child("request").getValue(String.class));
                             dateTime.add(ds.child("dateTime").getValue(String.class));
@@ -91,7 +92,7 @@ public class ProviderHome extends AppCompatActivity {
                             services.add(serviceCheck);
                         }
                     }
-                    if(requests.size() > 0) {
+                    if (requests.size() > 0) {
                         requestList.setAdapter(adapter);
                     } else {
                         norequest.setVisibility(View.VISIBLE);
@@ -108,35 +109,9 @@ public class ProviderHome extends AppCompatActivity {
 
             }
         });
-
-//        DBHelper dbHelper = new DBHelper(ProviderHome.this);
-//        SQLiteDatabase dbcall = dbHelper.getReadableDatabase();
-//
-//        String query = "select * from requests";
-//
-//        Cursor next = dbcall.rawQuery(query, null);
-
-//        if(next.moveToNext()) {
-//            do {
-//                if(serviceTitle.equalsIgnoreCase(next.getString(next.getColumnIndex("service")))) {
-//                    requests.add(next.getString(next.getColumnIndex("request")));
-//                    dateTime.add(next.getString(next.getColumnIndex("dateTime")));
-//                    ids.add(next.getString(next.getColumnIndex("srno")));
-//                    statuses.add(next.getString(next.getColumnIndex("status")));
-//                    names.add(next.getString(next.getColumnIndex("name")));
-//                    emails.add(next.getString(next.getColumnIndex("email")));
-//                    contacts.add(next.getString(next.getColumnIndex("contact")));
-//                    aptNos.add(next.getString(next.getColumnIndex("aptNo")));
-//                    services.add(next.getString(next.getColumnIndex("service")));
-//                }
-//            } while (next.moveToNext());
-//        } else
-//        {
-//            norequest.setVisibility(View.VISIBLE);
-//            requestList.setVisibility(View.GONE);
-//        }
     }
 
+    //clear the list view and re-initialize
     private void clearLists() {
 
         ids.clear();
@@ -149,15 +124,17 @@ public class ProviderHome extends AppCompatActivity {
         aptNos.clear();
         dateTime.clear();
         adapter.notifyDataSetChanged();
-        //Toast.makeText(this, "CLEARED", Toast.LENGTH_SHORT).show();
     }
 
+    //inner adapter class for list view
     class Adapter extends BaseAdapter {
 
         Context context;
+
         public Adapter(Context _context) {
             context = _context;
         }
+
         @Override
         public int getCount() {
             return requests.size();
@@ -180,7 +157,7 @@ public class ProviderHome extends AppCompatActivity {
             View v = inflater.inflate(R.layout.request_layout_inflater, null);
             TextView requestTv = v.findViewById(R.id.titletextView12RLI);
             String reqTemp = requests.get(position);
-            if(reqTemp.length() > 25) {
+            if (reqTemp.length() > 25) {
                 for (int i = 0; i < reqTemp.length(); i += 25) {
                     reqTemp = reqTemp.substring(i, Math.min(i + 25, reqTemp.length()));
                 }
@@ -200,6 +177,7 @@ public class ProviderHome extends AppCompatActivity {
         }
     }
 
+    //initialize the components
     private void initialize() {
         requestList = findViewById(R.id.requestListPH);
         ids = new ArrayList<>();
@@ -213,6 +191,8 @@ public class ProviderHome extends AppCompatActivity {
         names = new ArrayList<>();
         norequest = findViewById(R.id.norequestPH);
     }
+
+    //create three dot menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -220,11 +200,12 @@ public class ProviderHome extends AppCompatActivity {
         return true;
     }
 
+    //click listener for three dot menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.pendingMenu) {
-            for(int i = 0; i < statuses.size(); i++) {
-                if(!statuses.get(i).equalsIgnoreCase("pending")) {
+        if (item.getItemId() == R.id.pendingMenu) {
+            for (int i = 0; i < statuses.size(); i++) {
+                if (!statuses.get(i).equalsIgnoreCase("pending")) {
                     requests.remove(i);
                     services.remove(i);
                     aptNos.remove(i);
