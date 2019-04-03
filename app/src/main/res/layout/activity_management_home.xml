@@ -52,4 +52,12 @@
         android:background="@drawable/button_style"
         android:text="Create Service Provider"
         android:textColor="@android:color/white" />
+    <Button
+        android:id="@+id/registarationReqsbuttonMH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
+        android:text="Registration Requests"
+        android:textColor="@android:color/white" />
 </LinearLayout>

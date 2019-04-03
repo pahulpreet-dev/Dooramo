@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginBtn;
     EditText username, password;
     private String service;
+    private TextView signUpUser, signUpProvider;
 
     //LoginActivity
     @Override
@@ -45,9 +47,21 @@ public class LoginActivity extends AppCompatActivity {
                 checkLoginDetails();
             }
         });
+        signUpUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, CreateUser.class)
+                    .putExtra("signUpFlag", "user"));
+            }
+        });
+        signUpProvider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, CreateServiceProvider.class)
+                        .putExtra("signUpFlag", "provider"));
+            }
+        });
     }
-
-    //check if resident already logged in
 
     /**
      * check if resident already logged in.
@@ -63,8 +77,6 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * update the preferences when a resident logs in
-     *
-     * @param user
      */
     private void updatePrefrences(final String user) {
         SharedPreferences sharedPref = LoginActivity.this.getSharedPreferences("ForLogin",
@@ -106,13 +118,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild(mUsername)) {
-                    DataSnapshot dataSnapshot1 = dataSnapshot.child(mUsername).child("password");
-                    String checkPassword = dataSnapshot1.getValue(String.class);
-                    if (checkPassword.equals(mPassword)) {
-                        updatePrefrences(mUsername);
-                        Toast.makeText(LoginActivity.this, "GOTCHA", Toast.LENGTH_SHORT).show();
+                    String checkVerification = dataSnapshot.child(mUsername).child("verification")
+                            .getValue(String.class);
+                    if(checkVerification.equals("done")) {
+                        DataSnapshot dataSnapshot1 = dataSnapshot.child(mUsername).child("password");
+                        String checkPassword = dataSnapshot1.getValue(String.class);
+                        if (checkPassword.equals(mPassword)) {
+                            updatePrefrences(mUsername);
+                        } else {
+                            username.setError("Invalid username/password");
+                            Toast.makeText(LoginActivity.this,
+                                    "Invalid username/password",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        username.setError("Invalid username/password");
+                        Toast.makeText(LoginActivity.this,
+                                "Your account is pending verification",
+                                Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
@@ -129,6 +151,9 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 } else {
                                     username.setError("Invalid username/password");
+                                    Toast.makeText(LoginActivity.this,
+                                            "Invalid username/password",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 DatabaseReference databaseReference = FirebaseDatabase.getInstance()
@@ -137,13 +162,26 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.hasChild(mUsername)) {
-                                            String checkPassword = dataSnapshot.child(mUsername)
-                                                    .child("password")
+                                            String checkVerification = dataSnapshot.child(mUsername)
+                                                    .child("verification")
                                                     .getValue(String.class);
-                                            if (checkPassword.equals(mPassword)) {
-                                                getProvidedService(mUsername);
-                                            } else {
-                                                username.setError("Invalid username/password");
+                                            if(checkVerification.equals("done")) {
+                                                String checkPassword = dataSnapshot.child(mUsername)
+                                                        .child("password")
+                                                        .getValue(String.class);
+                                                if (checkPassword.equals(mPassword)) {
+                                                    getProvidedService(mUsername);
+                                                } else {
+                                                    username.setError("Invalid username/password");
+                                                    Toast.makeText(LoginActivity.this,
+                                                            "Invalid username/password",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                            else {
+                                                Toast.makeText(LoginActivity.this,
+                                                        "Your account is pending verification",
+                                                        Toast.LENGTH_SHORT).show();
                                             }
                                         } else {
                                             username.setError("Invalid username/password");
@@ -200,5 +238,7 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.lgnBtn);
         username = findViewById(R.id.unameeditText);
         password = findViewById(R.id.passwordeditText2);
+        signUpUser = findViewById(R.id.signUptextViewUser);
+        signUpProvider = findViewById(R.id.signUptextViewProvider);
     }
 }

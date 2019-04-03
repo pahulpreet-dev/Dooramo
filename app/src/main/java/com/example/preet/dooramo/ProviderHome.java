@@ -43,9 +43,10 @@ public class ProviderHome extends AppCompatActivity {
         initialize();
         setTitle("View Requests");
         serviceTitle = getIntent().getStringExtra("service");
-        getData();
 
         adapter = new Adapter(ProviderHome.this);
+
+        getData();
 
         requestList.setAdapter(adapter);
         //open and pass values to View Request Details activity

@@ -14,6 +14,7 @@ public class CreateServiceProvider extends AppCompatActivity {
     private EditText name, phone, email;
     private Spinner serviceProvided;
     private Button next;
+    private String signUpFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,8 @@ public class CreateServiceProvider extends AppCompatActivity {
 
         initSpinner();
 
+        signUpFlag = getIntent().getStringExtra("signUpFlag");
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,6 +36,7 @@ public class CreateServiceProvider extends AppCompatActivity {
                     next.putExtra("phone", phone.getText().toString());
                     next.putExtra("email", email.getText().toString());
                     next.putExtra("service", serviceProvided.getSelectedItem().toString());
+                    next.putExtra("signUpFlag", signUpFlag);
                     startActivity(next);
                 }
             }

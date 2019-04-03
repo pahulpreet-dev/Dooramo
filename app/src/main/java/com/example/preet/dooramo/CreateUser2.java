@@ -26,7 +26,8 @@ public class CreateUser2 extends AppCompatActivity {
     private String name, dob, email, aptNo, number;
     private EditText username, password;
     private Button createUserBtn;
-
+    private String signUpFlag;
+    private DatabaseReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,6 @@ public class CreateUser2 extends AppCompatActivity {
             public void onClick(View v) {
                 if (validate()) {
                     createUserNowFirebase();
-
                 }
             }
         });
@@ -48,7 +48,7 @@ public class CreateUser2 extends AppCompatActivity {
 
     //sign up new user
     private void createUserNowFirebase() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("userAccount/usernames");
+        ref = FirebaseDatabase.getInstance().getReference().child("userAccount/usernames");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -57,8 +57,13 @@ public class CreateUser2 extends AppCompatActivity {
                 if (dataSnapshot.hasChild(mUsername)) {
                     Toast.makeText(CreateUser2.this, "Username exist", Toast.LENGTH_SHORT).show();
                 } else {
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("userAccount/usernames");
+                    //DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("userAccount/usernames");
                     ref.child(mUsername).child("password").setValue(mPassword);
+
+                    if(signUpFlag.equals("management"))
+                        ref.child(mUsername).child("verification").setValue("done");
+                    else if(signUpFlag.equals("user"))
+                        ref.child(mUsername).child("verification").setValue("pending");
 
                     DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("userInfo/usernames");
                     Map<String, String> userInfo = new HashMap<>();
@@ -68,12 +73,21 @@ public class CreateUser2 extends AppCompatActivity {
                     userInfo.put("number", number);
                     userInfo.put("apartment number", aptNo);
                     ref2.child(mUsername).setValue(userInfo);
-
-                    Toast.makeText(CreateUser2.this, "New user account has been created successfully",
-                            Toast.LENGTH_SHORT).show();
-                    Intent close = new Intent(CreateUser2.this, ManagementHome.class);
-                    close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(close);
+                    if(signUpFlag.equals("management")) {
+                        Toast.makeText(CreateUser2.this, "New user account has been" +
+                                        " created successfully",
+                                Toast.LENGTH_SHORT).show();
+                        Intent close = new Intent(CreateUser2.this, ManagementHome.class);
+                        close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(close);
+                    } else if(signUpFlag.equals("user")) {
+                        Toast.makeText(CreateUser2.this, "Request for registration has " +
+                                        "been sent to management",
+                                Toast.LENGTH_SHORT).show();
+                        Intent close = new Intent(CreateUser2.this, LoginActivity.class);
+                        close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(close);
+                    }
                 }
             }
 
@@ -111,6 +125,6 @@ public class CreateUser2 extends AppCompatActivity {
         email = intent.getStringExtra("email");
         aptNo = intent.getStringExtra("aptNo");
         number = intent.getStringExtra("number");
-        Log.d("name", name);
+        signUpFlag = intent.getStringExtra("signUpFlag");
     }
 }

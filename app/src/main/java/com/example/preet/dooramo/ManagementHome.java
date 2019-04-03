@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class ManagementHome extends AppCompatActivity {
 
-    Button newUser, createManager, checkRequest, requestProviders, createService;
+    Button newUser, createManager, checkRequest, requestProviders, createService, regRequests;
 
     //ManagementHome
     @Override
@@ -21,7 +21,8 @@ public class ManagementHome extends AppCompatActivity {
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ManagementHome.this, CreateUser.class));
+                startActivity(new Intent(ManagementHome.this, CreateUser.class)
+                .putExtra("signUpFlag", "management"));
             }
         });
         //click listener for create new manager
@@ -49,7 +50,8 @@ public class ManagementHome extends AppCompatActivity {
         createService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ManagementHome.this, CreateServiceProvider.class));
+                startActivity(new Intent(ManagementHome.this, CreateServiceProvider.class)
+                        .putExtra("signUpFlag", "management"));
             }
         });
     }
@@ -61,6 +63,7 @@ public class ManagementHome extends AppCompatActivity {
         checkRequest = findViewById(R.id.requestbuttonMH);
         requestProviders = findViewById(R.id.requestProvidersbutton2MH);
         createService = findViewById(R.id.SPbuttonMH);
+        regRequests = findViewById(R.id.registarationReqsbuttonMH);
     }
 
     @Override

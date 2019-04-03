@@ -60,4 +60,29 @@
         android:text="Login"
         android:background="@drawable/button_style"
         android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/signUptextViewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/lgnBtn"
+        android:layout_marginTop="16dp"
+        android:textStyle="italic|bold"
+        android:textColor="#000038"
+        android:text="@string/sign_up_as_user"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <TextView
+        android:id="@+id/signUptextViewProvider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/signUptextViewUser"
+        android:layout_marginTop="16dp"
+        android:textStyle="italic|bold"
+        android:textColor="#000038"
+        android:text="@string/sign_up_as_provider"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
 </RelativeLayout>

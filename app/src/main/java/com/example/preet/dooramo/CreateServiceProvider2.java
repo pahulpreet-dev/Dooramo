@@ -25,6 +25,7 @@ public class CreateServiceProvider2 extends Activity {
     private String name, phone, email, service;
     private EditText uname, password;
     private Button create;
+    private String signUpFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,12 @@ public class CreateServiceProvider2 extends Activity {
                             .child("serviceProviderAccount/usernames");
                     ref.child(mUsername).child("password").setValue(mPassword);
 
+                    if(signUpFlag.equals("management")) {
+                        ref.child(mUsername).child("verification").setValue("done");
+                    } else if(signUpFlag.equals("provider")) {
+                        ref.child(mUsername).child("verification").setValue("pending");
+                    }
+
                     DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference()
                             .child("serviceProviderInfo/usernames");
                     Map<String, String> userInfo = new HashMap<>();
@@ -67,12 +74,22 @@ public class CreateServiceProvider2 extends Activity {
                     userInfo.put("service provided", service);
                     ref2.child(mUsername).setValue(userInfo);
 
-                    Toast.makeText(CreateServiceProvider2.this,
-                            "New service provider account has been created successfully",
-                            Toast.LENGTH_SHORT).show();
-                    Intent close = new Intent(CreateServiceProvider2.this, ManagementHome.class);
-                    close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(close);
+                    if(signUpFlag.equals("management")) {
+                        Toast.makeText(CreateServiceProvider2.this,
+                                "New service provider account has been created successfully",
+                                Toast.LENGTH_SHORT).show();
+                        Intent close = new Intent(CreateServiceProvider2.this, ManagementHome.class);
+                        close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(close);
+                    } else if(signUpFlag.equals("provider")) {
+                        Toast.makeText(CreateServiceProvider2.this,
+                                "Request for registration has been sent to management",
+                                Toast.LENGTH_SHORT).show();
+                        Intent close = new Intent(CreateServiceProvider2.this,
+                                LoginActivity.class);
+                        close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(close);
+                    }
                 }
             }
 
@@ -109,5 +126,6 @@ public class CreateServiceProvider2 extends Activity {
         email = intent.getStringExtra("email");
         phone = intent.getStringExtra("phone");
         service = intent.getStringExtra("service");
+        signUpFlag = intent.getStringExtra("signUpFlag");
     }
 }

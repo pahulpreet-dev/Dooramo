@@ -2,5 +2,7 @@
     <string name="app_name">Dooramo</string>
     <string name="explaination">Please explain your problem in detail</string>
     <string name="search">Search</string>
+    <string name="sign_up_as_user"><u>Sign Up as User</u></string>
+    <string name="sign_up_as_provider"><u>Sign Up as Provider</u></string>
 
 </resources>

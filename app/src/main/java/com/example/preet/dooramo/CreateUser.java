@@ -11,12 +11,16 @@ public class CreateUser extends AppCompatActivity {
 
     private EditText name, dob, email, aptNo, number;
     private Button next;
+    private String signUpFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
         setTitle("Create New User");
+
+        signUpFlag = getIntent().getStringExtra("signUpFlag");
+
         initComponents();
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,7 +31,8 @@ public class CreateUser extends AppCompatActivity {
                             .putExtra("dob", dob.getText().toString())
                             .putExtra("email", email.getText().toString())
                             .putExtra("aptNo", aptNo.getText().toString())
-                            .putExtra("number", number.getText().toString()));
+                            .putExtra("number", number.getText().toString())
+                            .putExtra("signUpFlag", signUpFlag));
 
                 }
             }

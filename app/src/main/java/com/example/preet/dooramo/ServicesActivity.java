@@ -17,6 +17,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ *
+ */
 public class ServicesActivity extends AppCompatActivity {
     GridView gridViewSA;
     int[] images;
