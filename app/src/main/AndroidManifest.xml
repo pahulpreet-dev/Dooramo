@@ -31,7 +31,10 @@
         <activity android:name=".CreateServiceProvider2" />
         <activity android:name=".ProviderHome" />
         <activity android:name=".ResidentMyJobs" />
-        <activity android:name=".RegistrationRequests"></activity>
+        <activity android:name=".RegistrationRequests" />
+        <activity android:name=".SubmitFeedback" />
+        <activity android:name=".CheckFeedback"/>
+        <activity android:name=".FeedbackDetails" />
     </application>
 
 </manifest>

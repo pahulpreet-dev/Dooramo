@@ -4,5 +4,7 @@
     <string name="search">Search</string>
     <string name="sign_up_as_user"><u>Sign Up as User</u></string>
     <string name="sign_up_as_provider"><u>Sign Up as Provider</u></string>
+    <string name="give_feedback">Your feedback is important to us. Please give a review about the service provided</string>
+    <string name="submit">Submit</string>
 
 </resources>

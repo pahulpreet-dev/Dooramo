@@ -19,7 +19,7 @@ import java.util.Map;
 public class RequestDetails extends AppCompatActivity {
 
     TextView reqTv, nameTv, serviceTv, emailTv, contactTv, aptNoTv, statusTv, dateTv;
-    Button updateStatus;
+    Button updateStatus, feedbackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class RequestDetails extends AppCompatActivity {
         //check the flag, if the request is made by resident then the update button is not visible
         if (get.getStringExtra("residentFlag").equals("resident")) {
             updateStatus.setVisibility(View.GONE);
+            feedbackButton.setVisibility(View.VISIBLE);
         }
 
         //populate the TextViews with the data
@@ -65,6 +66,17 @@ public class RequestDetails extends AppCompatActivity {
             }
         });
 
+        feedbackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!statusTv.getText().toString().equals("Status: Done")) {
+                    Toast.makeText(RequestDetails.this, "The request is still pending", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(RequestDetails.this, SubmitFeedback.class));
+                }
+            }
+        });
+
     }
 
     //status update in the database
@@ -90,5 +102,6 @@ public class RequestDetails extends AppCompatActivity {
         statusTv = findViewById(R.id.statustextView18RD);
         dateTv = findViewById(R.id.datetextView19RD);
         updateStatus = findViewById(R.id.statusbuttonRD);
+        feedbackButton = findViewById(R.id.feedbackbuttonRD);
     }
 }
