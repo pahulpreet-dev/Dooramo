@@ -72,6 +72,10 @@ public class CreateServiceProvider2 extends Activity {
                     userInfo.put("phone", phone);
                     userInfo.put("email", email);
                     userInfo.put("service provided", service);
+                    if(signUpFlag.equals("management"))
+                        userInfo.put("verification", "done");
+                    else if(signUpFlag.equals("provider"))
+                        userInfo.put("verification", "pending");
                     ref2.child(mUsername).setValue(userInfo);
 
                     if(signUpFlag.equals("management")) {

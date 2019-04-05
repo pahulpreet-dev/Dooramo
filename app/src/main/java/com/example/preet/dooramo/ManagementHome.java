@@ -54,6 +54,13 @@ public class ManagementHome extends AppCompatActivity {
                         .putExtra("signUpFlag", "management"));
             }
         });
+        //click listener for checking self registration requests
+        regRequests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ManagementHome.this, RegistrationRequests.class));
+            }
+        });
     }
 
     //initialize the components

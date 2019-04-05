@@ -72,6 +72,10 @@ public class CreateUser2 extends AppCompatActivity {
                     userInfo.put("email", email);
                     userInfo.put("number", number);
                     userInfo.put("apartment number", aptNo);
+                    if(signUpFlag.equals("management"))
+                        userInfo.put("verification", "done");
+                    else if(signUpFlag.equals("user"))
+                        userInfo.put("verification", "pending");
                     ref2.child(mUsername).setValue(userInfo);
                     if(signUpFlag.equals("management")) {
                         Toast.makeText(CreateUser2.this, "New user account has been" +
