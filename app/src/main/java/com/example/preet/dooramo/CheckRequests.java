@@ -76,8 +76,6 @@ public class CheckRequests extends AppCompatActivity {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         data = new RequestDetailsHelper();
                         data.setId(ds.getKey());
-                        Log.d("asdf", ds.getKey());
-                        Log.d("asdf2", data.getId());
                         data.setRequest(ds.child("request").getValue(String.class));
                         data.setDateTime(ds.child("dateTime").getValue(String.class));
                         data.setStatus(ds.child("status").getValue(String.class));

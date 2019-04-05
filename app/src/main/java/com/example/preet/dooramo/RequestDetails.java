@@ -72,7 +72,8 @@ public class RequestDetails extends AppCompatActivity {
                 if(!statusTv.getText().toString().equals("Status: Done")) {
                     Toast.makeText(RequestDetails.this, "The request is still pending", Toast.LENGTH_SHORT).show();
                 } else {
-                    startActivity(new Intent(RequestDetails.this, SubmitFeedback.class));
+                    startActivity(new Intent(RequestDetails.this, SubmitFeedback.class)
+                            .putExtra("requestId", getIntent().getStringExtra("id")));
                 }
             }
         });
