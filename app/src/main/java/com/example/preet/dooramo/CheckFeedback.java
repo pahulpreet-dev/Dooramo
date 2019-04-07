@@ -1,6 +1,7 @@
 package com.example.preet.dooramo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
@@ -37,6 +39,16 @@ public class CheckFeedback extends AppCompatActivity {
         setContentView(R.layout.activity_check_feedback);
         initComponents();
         getData();
+        setTitle("View Feedback");
+
+        feedbackListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(CheckFeedback.this, FeedbackDetails.class)
+                        .putExtra("feedback", feedbackList.get(position))
+                        .putExtra("requestDetails", requestDetailsList.get(position)));
+            }
+        });
     }
 
     private void getData() {

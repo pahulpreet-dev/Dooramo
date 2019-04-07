@@ -57,7 +57,8 @@ public class CheckRequests extends AppCompatActivity {
                         .putExtra("dateTime", dataItem.getDateTime())
                         .putExtra("status", dataItem.getStatus())
                         .putExtra("name", dataItem.getName())
-                        .putExtra("id", dataItem.getId()));
+                        .putExtra("id", dataItem.getId())
+                        .putExtra("residentFlag", "management"));
             }
         });
     }

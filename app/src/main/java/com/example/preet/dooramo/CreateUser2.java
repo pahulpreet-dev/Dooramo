@@ -1,6 +1,8 @@
 package com.example.preet.dooramo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
@@ -48,6 +50,12 @@ public class CreateUser2 extends AppCompatActivity {
 
     //sign up new user
     private void createUserNowFirebase() {
+        SharedPreferences sharedPref = CreateUser2.this.getSharedPreferences("ForLogin",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.commit();
+        editor.apply();
         ref = FirebaseDatabase.getInstance().getReference().child("userAccount/usernames");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

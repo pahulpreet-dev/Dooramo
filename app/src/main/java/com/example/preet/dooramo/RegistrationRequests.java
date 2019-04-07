@@ -124,7 +124,7 @@ public class RegistrationRequests extends AppCompatActivity {
                             requestsHelper.setName(ds.child("name").getValue(String.class));
                             requestsHelper.setEmail(ds.child("email").getValue(String.class));
                             requestsHelper.setPhone(ds.child("number").getValue(String.class));
-                            requestsHelper.setMetaData(ds.child("apartment number").getValue(String.class));
+                            requestsHelper.setMetaData("Apt No: " + ds.child("apartment number").getValue(String.class));
                             requestsHelper.setRequestByFlag("resident");
                             requestsHelperList.add(requestsHelper);
                         }
@@ -148,7 +148,7 @@ public class RegistrationRequests extends AppCompatActivity {
                             requestsHelper.setName(ds.child("name").getValue(String.class));
                             requestsHelper.setEmail(ds.child("email").getValue(String.class));
                             requestsHelper.setPhone(ds.child("phone").getValue(String.class));
-                            requestsHelper.setMetaData(ds.child("service provided").getValue(String.class));
+                            requestsHelper.setMetaData("Service: " + ds.child("service provided").getValue(String.class));
                             requestsHelper.setRequestByFlag("provider");
                             requestsHelperList.add(requestsHelper);
                         } else {
@@ -179,6 +179,7 @@ public class RegistrationRequests extends AppCompatActivity {
             super(context, resource, objects);
             this.context = context;
             this.items = objects;
+
         }
 
         @NonNull

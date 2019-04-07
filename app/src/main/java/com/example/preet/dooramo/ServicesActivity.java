@@ -106,6 +106,7 @@ public class ServicesActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.clear();
             editor.commit();
+            editor.apply();
             Intent intent = new Intent(ServicesActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             finish();
