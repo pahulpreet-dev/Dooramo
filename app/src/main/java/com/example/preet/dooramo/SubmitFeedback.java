@@ -26,7 +26,7 @@ public class SubmitFeedback extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(submitFeedback()){
-                    Intent close = new Intent(SubmitFeedback.this, ServicesActivity.class);
+                    Intent close = new Intent(SubmitFeedback.this, ResidentMyJobs.class);
                     close.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(close);
                 }

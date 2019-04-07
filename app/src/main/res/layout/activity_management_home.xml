@@ -14,7 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_style"
-        android:text="Check Requests"
+        android:text="@string/check_requests"
+        android:textColor="@android:color/white" />
+    <Button
+        android:id="@+id/checkFeedbackbuttonMH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
+        android:text="@string/check_feedback"
         android:textColor="@android:color/white" />
 
     <Button
@@ -23,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_style"
-        android:text="Request Providers"
+        android:text="@string/request_providers"
         android:textColor="@android:color/white" />
 
     <Button
@@ -33,7 +41,7 @@
         android:textColor="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create User" />
+        android:text="@string/create_user" />
 
     <Button
         android:id="@+id/managerbuttonMH"
@@ -58,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_style"
-        android:text="Registration Requests"
+        android:text="@string/registration_requests"
         android:textColor="@android:color/white" />
+
 </LinearLayout>

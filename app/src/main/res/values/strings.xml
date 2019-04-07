@@ -6,5 +6,10 @@
     <string name="sign_up_as_provider"><u>Sign Up as Provider</u></string>
     <string name="give_feedback">Your feedback is important to us. Please give a review about the service provided</string>
     <string name="submit">Submit</string>
+    <string name="check_feedback">Check Feedback</string>
+    <string name="check_requests">Check Requests</string>
+    <string name="request_providers">Request Providers</string>
+    <string name="create_user">Create User</string>
+    <string name="registration_requests">Registration Requests</string>
 
 </resources>
