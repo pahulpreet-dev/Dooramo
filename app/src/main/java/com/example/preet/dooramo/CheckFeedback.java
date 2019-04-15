@@ -51,6 +51,7 @@ public class CheckFeedback extends AppCompatActivity {
         });
     }
 
+    //get feedback from the database
     private void getData() {
         final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         DatabaseReference feedbackReference = db.child("requestFeedback");
@@ -80,6 +81,7 @@ public class CheckFeedback extends AppCompatActivity {
         });
     }
 
+    //get details of a particular feedback
     private void getRequestDetails() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("requests");
         reference.addValueEventListener(new ValueEventListener() {
@@ -115,6 +117,7 @@ public class CheckFeedback extends AppCompatActivity {
         });
     }
 
+    //initialize components
     private void initComponents() {
         feedbackListView = findViewById(R.id.checkFeedbackListView);
         feedbackList = new ArrayList<>();
@@ -122,6 +125,7 @@ public class CheckFeedback extends AppCompatActivity {
         requestDetailsList = new ArrayList<>();
     }
 
+    //adapter for the list view
     private class Adapter extends ArrayAdapter<HashMap<String, String>> {
 
         private ArrayList<HashMap<String, String>> data;

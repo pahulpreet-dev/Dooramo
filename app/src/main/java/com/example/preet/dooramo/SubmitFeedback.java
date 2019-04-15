@@ -34,6 +34,20 @@ public class SubmitFeedback extends AppCompatActivity {
         });
     }
 
+    //submit feedback
+
+    /**
+     *As the resident hits the submit feedback we are creating a new node in database named
+     * "requestFeedback" that has the child node with id same as that of the id of request and
+     * then it further have child nodes that has rating and comments stored in it.
+     * Structure of the firebase is as below:
+        requestFeedback: {
+            requestID: { //same as id of the original request
+                 rating: ""
+                 comment: ""
+            }
+        }
+     */
     private boolean submitFeedback() {
         String requestId = getIntent().getStringExtra("requestId");
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("requestFeedback");
@@ -42,6 +56,7 @@ public class SubmitFeedback extends AppCompatActivity {
         return true;
     }
 
+    //initialize the components
     private void initComponents() {
         ratingBar = findViewById(R.id.ratingBarSF);
         commentEt = findViewById(R.id.feedbackeditTextSF);

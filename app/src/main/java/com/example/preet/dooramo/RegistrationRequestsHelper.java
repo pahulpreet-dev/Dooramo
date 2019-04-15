@@ -1,5 +1,8 @@
 package com.example.preet.dooramo;
 
+/**
+ * Helper class to populate the RegistrationRequests ListView
+ */
 public class RegistrationRequestsHelper {
     private String username;
     private String name;

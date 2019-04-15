@@ -43,6 +43,7 @@ public class RegistrationRequests extends AppCompatActivity {
         initComponents();
         getData();
 
+        //alert dialog that allows maanagement to accept or decline a registration request
         regRequestsList.setAdapter(new Adapter(RegistrationRequests.this,
                 R.layout.request_layout_inflater, requestsHelperList));
         regRequestsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -74,6 +75,15 @@ public class RegistrationRequests extends AppCompatActivity {
 
     }
 
+    //method for decline a request
+
+    /**
+     * if the management declines the request, then the record will be entirely deleted from the database
+     * The data is primarily put into two nodes: Account node and Info node.
+     * When the request is declined, this method is triggered to delete the data from both the above said nodes.
+     * @param requestFlagBy - check if request was raised by service provider or a resident
+     * @param position - position of the request in the ListView
+     */
     private void declineRegistration(String requestFlagBy, int position) {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         if(requestFlagBy.equals("resident")) {
@@ -91,6 +101,16 @@ public class RegistrationRequests extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     * If management accept the request then all we need to do is update the  "verification" flag
+     * in both Account and Info nodes to "done". This flag is always checked when a user tries to login.
+     * If the verification flag is not set to "done", then the user is not authorized to login and use
+     * the app.
+     *
+     * @param requestFlagBy - check if request was raised by service provider or a resident
+     * @param position - position of the request in the ListView
+     */
     private void acceptRegistration(String requestFlagBy, int position) {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         if(requestFlagBy.equals("resident")) {
@@ -108,6 +128,7 @@ public class RegistrationRequests extends AppCompatActivity {
         }
     }
 
+    //fetch all the requests
     private void getData() {
         requestsHelperList.clear();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -170,6 +191,7 @@ public class RegistrationRequests extends AppCompatActivity {
         });
     }
 
+    //adapter for ListView
     class Adapter extends ArrayAdapter<RegistrationRequestsHelper> {
 
         Context context;
@@ -208,6 +230,7 @@ public class RegistrationRequests extends AppCompatActivity {
         }
     }
 
+    //initialize the components
     private void initComponents() {
         regRequestsList = findViewById(R.id.regRequestsList);
         requestsHelperList= new ArrayList<>();
