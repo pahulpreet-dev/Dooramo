@@ -15,7 +15,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * purpose: to see the details of a particular request.
+ * Users: Resident for MyJobs. Management and service provider for updating the status
+ * author: Pahulpreet Singh and team
+ * Last update date: Mar 27, 2019
+ * ver: 5
+ *
+ */
 public class RequestDetails extends AppCompatActivity {
 
     TextView reqTv, nameTv, serviceTv, emailTv, contactTv, aptNoTv, statusTv, dateTv;

@@ -10,7 +10,13 @@ import android.widget.RatingBar;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+/**
+ * purpose: for residents to submit a feedback about a particular completed request
+ * author: Pahulpreet Singh and team
+ * date: Apr 5, 2019
+ * ver: 1
+ *
+ */
 public class SubmitFeedback extends AppCompatActivity {
 
     private RatingBar ratingBar;

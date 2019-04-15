@@ -22,7 +22,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * purpose: to register new resident by management (get username and password)
+ * author: Pahulpreet Singh and team
+ * date: Nov 23, 2018
+ * ver: 1
+ *
+ * ver: 2
+ * update: the resident can register themselves as well. They can provide details and
+ *         management will decide to accept or reject the request
+ *
+ */
 public class CreateUser2 extends AppCompatActivity {
 
     private String name, dob, email, aptNo, number;

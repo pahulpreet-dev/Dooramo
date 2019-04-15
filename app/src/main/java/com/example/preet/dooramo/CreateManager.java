@@ -26,6 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * purpose: For management to create a new admin account
+ * author: Pahulpreet Singh and team
+ * date: Nov 23, 2018
+ * ver: 1
+ */
 public class CreateManager extends AppCompatActivity {
 
     EditText username, passwordet;

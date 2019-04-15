@@ -10,6 +10,14 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
+/**
+ * purpose: for management to see the details of a particular feedback
+ * author: Pahulpreet Singh and team
+ * date: Apr 7, 2019
+ * ver: 1
+ *
+ */
+
 public class FeedbackDetails extends AppCompatActivity {
 
     TextView reqTv, nameTv, serviceTv, emailTv, contactTv, aptNoTv, feedbackTv, dateTv;

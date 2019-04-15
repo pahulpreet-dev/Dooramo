@@ -22,6 +22,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+/**
+ * purpose: A common place for everyone to login. Users: Residents, Service providers and management
+ * author: Pahulpreet Singh and team
+ * date: Nov 20, 2018
+ * ver: 6
+ *
+ */
 
 public class LoginActivity extends AppCompatActivity {
 

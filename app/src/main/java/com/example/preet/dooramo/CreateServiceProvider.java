@@ -9,6 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+/**
+ * purpose: to register new service provider by management (get details)
+ * author: Pahulpreet Singh and team
+ * date: Nov 23, 2018
+ * ver: 1
+ *
+ * ver: 2
+ * update: the service provider can register themselves as well. They can provide details and
+ *         management will decide to accept or reject the request
+ *
+ */
 public class CreateServiceProvider extends AppCompatActivity {
 
     private EditText name, phone, email;

@@ -26,7 +26,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
+/**
+ * purpose: Home page for Service Providers
+ * author: Pahulpreet Singh and team
+ * date: Nov 9, 2018
+ * ver: 2
+ *
+ */
 public class ProviderHome extends AppCompatActivity {
     private ArrayList<String> requests, ids, aptNos, contacts, emails, services, dateTime,
             statuses, names;

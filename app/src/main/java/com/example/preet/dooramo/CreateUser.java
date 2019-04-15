@@ -7,6 +7,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * purpose: to register new resident by management (get details)
+ * author: Pahulpreet Singh and team
+ * date: Nov 23, 2018
+ * ver: 1
+ *
+ * ver: 2
+ * update: the resident can register themselves as well. They can provide details and
+ *         management will decide to accept or reject the request
+ *
+ */
+
 public class CreateUser extends AppCompatActivity {
 
     private EditText name, dob, email, aptNo, number;

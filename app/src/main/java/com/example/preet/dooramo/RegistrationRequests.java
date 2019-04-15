@@ -26,7 +26,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * purpose: for management to view the registration requests
+ * author: Pahulpreet Singh and team
+ * date: Apr 5, 2019
+ * ver: 1
+ *
+ */
 public class RegistrationRequests extends AppCompatActivity {
 
     private ListView regRequestsList;

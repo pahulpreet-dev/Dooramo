@@ -26,6 +26,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * purpose: For management to check the all feedback submitted by the residents for the completed jobs
+ * author: Pahulpreet Singh and team
+ * date: Nov 25, 2018
+ * ver: 1
+ */
+
 public class CheckFeedback extends AppCompatActivity {
 
     ListView feedbackListView;

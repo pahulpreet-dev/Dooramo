@@ -18,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
+ * purpose: Home page for resident to select the type of request to be raised
+ * author: Pahulpreet Singh and team
+ * date: Nov 2, 2018
+ * ver: 1
  *
  */
 public class ServicesActivity extends AppCompatActivity {

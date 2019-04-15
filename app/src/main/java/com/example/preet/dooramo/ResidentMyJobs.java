@@ -21,7 +21,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
+/**
+ * purpose: for residents to see all requests raised by them
+ * author: Pahulpreet Singh and team
+ * date: Mar 21, 2019
+ * ver: 2
+ *
+ */
 public class ResidentMyJobs extends AppCompatActivity {
 
     ArrayList<RequestDetailsHelper> requestsList;

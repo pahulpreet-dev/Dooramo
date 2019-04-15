@@ -11,7 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+/**
+ * purpose: for management to see the available service providers
+ * author: Pahulpreet Singh and team
+ * date: Apr 7, 2019
+ * ver: 1
+ *
+ */
 public class SelectProviders extends AppCompatActivity {
 
     private Button carpenter, electrician, plumber;

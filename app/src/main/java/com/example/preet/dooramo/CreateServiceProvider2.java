@@ -20,6 +20,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * purpose: to register new service provider by management (get username and password)
+ * author: Pahulpreet Singh and team
+ * date: Nov 23, 2018
+ * ver: 1
+ *
+ * ver: 2
+ * update: the service provider can register themselves as well. They can provide details and
+ *         management will decide to accept or reject the request
+ *
+ */
 public class CreateServiceProvider2 extends Activity {
 
     private String name, phone, email, service;

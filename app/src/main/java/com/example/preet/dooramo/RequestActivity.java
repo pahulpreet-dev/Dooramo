@@ -19,7 +19,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * purpose: for management to see the requests raised by residents
+ * author: Pahulpreet Singh and team
+ * date: Nov 25, 2018
+ * ver: 3
+ *
+ */
 public class RequestActivity extends AppCompatActivity {
     private String serviceRequest, name, aptNo, email, contact, username;
     Button requestButton;
